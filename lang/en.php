@@ -1,0 +1,23 @@
+<?php
+
+/* ADMIN PANEL */
+const FAQ_DASHBOARD_TITLE = "FAQ - Listing";
+const FAQ_DASHBOARD_DESC = "Manage your FAQ";
+
+const FAQ_DASHBOARD_TABLE_TITLE = "Listing your FAQ";
+const FAQ_DASHBOARD_TABLE_QUESTION = "Questions";
+const FAQ_DASHBOARD_TABLE_RESPONSE = "Responses";
+const FAQ_DASHBOARD_TABLE_AUTHOR = "Author";
+const FAQ_DASHBOARD_TABLE_EDITING = "Modifications";
+
+const FAQ_DASHBOARD_ADD_TITLE = "FAQ - Additions";
+const FAQ_DASHBOARD_TABLE_ADD_TITLE = "Add an FAQ";
+
+
+const FAQ_DASHBOARD_ADD_QUESTION_PLACEHOLDER = "Add a question";
+const FAQ_DASHBOARD_ADD_QUESTION_LABEL = "Question";
+const FAQ_DASHBOARD_ADD_RESPONSE_PLACEHOLDER = "Add a response";
+const FAQ_DASHBOARD_ADD_RESPONSE_LABEL = "Response";
+
+const FAQ_DASHBOARD_EDIT_TITLE = "FAQ - Modifications";
+const FAQ_DASHBOARD_TABLE_EDIT_TITLE = "Edit the FAQ n° ";
