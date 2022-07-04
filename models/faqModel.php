@@ -2,7 +2,7 @@
 
 namespace CMW\Model\Faq;
 
-use CMW\Model\manager;
+use CMW\Model\Manager;
 
 use PDO;
 use stdClass;
@@ -13,7 +13,7 @@ use stdClass;
  * @author Teyir
  * @version 1.0
  */
-class faqModel extends manager
+class faqModel extends Manager
 {
     public string $question;
     public string $response;
@@ -31,7 +31,7 @@ class faqModel extends manager
 
         $sql = "INSERT INTO cmw_faq (question, response, author) VALUES (:question, :response, :author)";
 
-        $db = manager::dbConnect();
+        $db = Manager::dbConnect();
         $req = $db->prepare($sql);
         $req->execute($var);
     }
@@ -40,7 +40,7 @@ class faqModel extends manager
     public function fetchAll(): array
     {
         $sql = "SELECT * FROM cmw_faq";
-        $db = manager::dbConnect();
+        $db = Manager::dbConnect();
         $req = $db->prepare($sql);
         $res = $req->execute();
 
@@ -59,7 +59,7 @@ class faqModel extends manager
 
         $sql = "SELECT * FROM cmw_faq WHERE faq_id=:faq_id";
 
-        $db = manager::dbConnect();
+        $db = Manager::dbConnect();
         $req = $db->prepare($sql);
 
         if ($req->execute($var)) {
@@ -92,7 +92,7 @@ class faqModel extends manager
 
         $sql = "UPDATE cmw_faq SET question=:question, response=:response WHERE faq_id=:faq_id";
 
-        $db = manager::dbConnect();
+        $db = Manager::dbConnect();
         $req = $db->prepare($sql);
         $req->execute($info);
     }
@@ -106,7 +106,7 @@ class faqModel extends manager
 
         $sql = "DELETE FROM cmw_faq WHERE faq_id=:faq_id";
 
-        $db = manager::dbConnect();
+        $db = Manager::dbConnect();
         $req = $db->prepare($sql);
         $req->execute($info);
     }

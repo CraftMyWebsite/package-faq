@@ -2,11 +2,11 @@
 
 namespace CMW\Controller\Faq;
 
-use CMW\Controller\coreController;
-use CMW\Controller\Menus\menusController;
-use CMW\Controller\users\usersController;
+use CMW\Controller\CoreController;
+use CMW\Controller\Menus\MenusController;
+use CMW\Controller\users\UsersController;
 use CMW\Model\faq\faqModel;
-use CMW\Model\users\usersModel;
+use CMW\Model\users\UsersModel;
 
 /**
  * Class: @faqController
@@ -14,7 +14,7 @@ use CMW\Model\users\usersModel;
  * @author Teyir
  * @version 1.0
  */
-class faqController extends coreController
+class faqController extends CoreController
 {
 
     public static string $themePath;
@@ -26,7 +26,7 @@ class faqController extends coreController
 
     public function faqList(): void
     {
-        usersController::isUserHasPermission("faq.show");
+        UsersController::isUserHasPermission("faq.show");
 
         $faq = new faqModel();
         $faqList = $faq->fetchAll();
@@ -37,7 +37,7 @@ class faqController extends coreController
 
     public function faqEdit($id): void
     {
-        usersController::isUserHasPermission("faq.edit");
+        UsersController::isUserHasPermission("faq.edit");
 
         $faq = new faqModel();
         $faq->fetch($id);
@@ -48,7 +48,7 @@ class faqController extends coreController
 
     public function faqEditPost($id): void
     {
-        usersController::isUserHasPermission("faq.edit");
+        UsersController::isUserHasPermission("faq.edit");
 
         $faq = new faqModel();
         $faq->faqId = $id;
@@ -62,21 +62,21 @@ class faqController extends coreController
 
     public function faqAdd(): void
     {
-        usersController::isUserHasPermission("faq.create");
+        UsersController::isUserHasPermission("faq.create");
 
         view('faq', 'add.admin', [], 'admin');
     }
 
     public function faqAddPost(): void
     {
-        usersController::isUserHasPermission("faq.create");
+        UsersController::isUserHasPermission("faq.create");
 
         $faq = new faqModel();
         $faq->question = filter_input(INPUT_POST, "question");
         $faq->response = filter_input(INPUT_POST, "response");
 
         //Get the author pseudo
-        $user = new usersModel;
+        $user = new UsersModel;
         $user->fetch($_SESSION['cmwUserId']);
         $faq->author = $user->userPseudo;
 
@@ -88,7 +88,7 @@ class faqController extends coreController
 
     public function faqDelete(): void
     {
-        usersController::isUserHasPermission("faq.delete");
+        UsersController::isUserHasPermission("faq.delete");
 
         $faq = new faqModel();
         $faq->faqId = filter_input(INPUT_POST, "id");
@@ -105,8 +105,8 @@ class faqController extends coreController
     {
 
         //Default controllers (important)
-        $core = new coreController();
-        $menu = new menusController();
+        $core = new CoreController();
+        $menu = new MenusController();
 
         $faq = new faqModel();
         $faqList = $faq->fetchAll();
