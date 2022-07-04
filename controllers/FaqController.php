@@ -5,7 +5,7 @@ namespace CMW\Controller\Faq;
 use CMW\Controller\CoreController;
 use CMW\Controller\Menus\MenusController;
 use CMW\Controller\users\UsersController;
-use CMW\Model\faq\faqModel;
+use CMW\Model\faq\FaqModel;
 use CMW\Model\users\UsersModel;
 
 /**
@@ -14,7 +14,7 @@ use CMW\Model\users\UsersModel;
  * @author Teyir
  * @version 1.0
  */
-class faqController extends CoreController
+class FaqController extends CoreController
 {
 
     public static string $themePath;
@@ -28,7 +28,7 @@ class faqController extends CoreController
     {
         UsersController::isUserHasPermission("faq.show");
 
-        $faq = new faqModel();
+        $faq = new FaqModel();
         $faqList = $faq->fetchAll();
 
         //Include the view file ("views/list.admin.view.php").
@@ -39,7 +39,7 @@ class faqController extends CoreController
     {
         UsersController::isUserHasPermission("faq.edit");
 
-        $faq = new faqModel();
+        $faq = new FaqModel();
         $faq->fetch($id);
 
 
@@ -50,7 +50,7 @@ class faqController extends CoreController
     {
         UsersController::isUserHasPermission("faq.edit");
 
-        $faq = new faqModel();
+        $faq = new FaqModel();
         $faq->faqId = $id;
         $faq->question = filter_input(INPUT_POST, "question");
         $faq->response = filter_input(INPUT_POST, "response");
@@ -71,7 +71,7 @@ class faqController extends CoreController
     {
         UsersController::isUserHasPermission("faq.create");
 
-        $faq = new faqModel();
+        $faq = new FaqModel();
         $faq->question = filter_input(INPUT_POST, "question");
         $faq->response = filter_input(INPUT_POST, "response");
 
@@ -90,7 +90,7 @@ class faqController extends CoreController
     {
         UsersController::isUserHasPermission("faq.delete");
 
-        $faq = new faqModel();
+        $faq = new FaqModel();
         $faq->faqId = filter_input(INPUT_POST, "id");
         $faq->delete();
 
@@ -108,7 +108,7 @@ class faqController extends CoreController
         $core = new CoreController();
         $menu = new MenusController();
 
-        $faq = new faqModel();
+        $faq = new FaqModel();
         $faqList = $faq->fetchAll();
 
         //Include the public view file ("public/themes/$themePath/views/faq/main.view.php")

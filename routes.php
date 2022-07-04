@@ -1,6 +1,6 @@
 <?php
 
-use CMW\Controller\faq\faqController;
+use CMW\Controller\faq\FaqController;
 
 require_once('Lang/'.getenv("LOCALE").'.php');
 
@@ -17,11 +17,11 @@ $router->scope('/cmw-admin/faq', function($router) {
     $router->get('/list', "faq#faqList");
 
     $router->get('/edit/:id', function($id) {
-        (new faqController)->faqEdit($id);
+        (new FaqController)->faqEdit($id);
     })->with('id', '[0-9]+');
 
     $router->post('/edit/:id', function($id) {
-        (new faqController)->faqEditPost($id);
+        (new FaqController)->faqEditPost($id);
     })->with('id', '[0-9]+');
 
     $router->get('/add', "faq#faqAdd");

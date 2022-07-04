@@ -1,7 +1,7 @@
 <?php
 $title = FAQ_DASHBOARD_EDIT_TITLE;
 $description = FAQ_DASHBOARD_DESC;
-/* @var \CMW\Controller\Faq\faqController $faq */
+/* @var \CMW\Controller\Faq\FaqController $faq */
 ?>
 
 <?php ob_start(); ?>

@@ -13,7 +13,7 @@ use stdClass;
  * @author Teyir
  * @version 1.0
  */
-class faqModel extends Manager
+class FaqModel extends Manager
 {
     public string $question;
     public string $response;
@@ -73,7 +73,7 @@ class faqModel extends Manager
                 array_unshift($key, $firstElement);
                 $key = implode('', $key);
 
-                if (property_exists(faqModel::class, $key)) {
+                if (property_exists(FaqModel::class, $key)) {
                     $this->$key = $property;
                 }
             }
