@@ -5,6 +5,7 @@ namespace CMW\Controller\Faq;
 use CMW\Controller\CoreController;
 use CMW\Controller\Menus\MenusController;
 use CMW\Controller\users\UsersController;
+use CMW\Entity\Users\UserEntity;
 use CMW\Model\faq\FaqModel;
 use CMW\Model\users\UsersModel;
 
@@ -31,8 +32,25 @@ class FaqController extends CoreController
         $faq = new FaqModel();
         $faqList = $faq->fetchAll();
 
+        $includes = array(
+            "scripts" => [
+                "before" => [
+                    "admin/resources/vendors/bootstrap/js/bootstrap.bundle.min.js",
+                    "admin/resources/vendors/datatables/jquery.dataTables.min.js",
+                    "admin/resources/vendors/datatables-bs4/js/dataTables.bootstrap4.min.js",
+                    "admin/resources/vendors/datatables-responsive/js/dataTables.responsive.min.js",
+                    "admin/resources/vendors/datatables-responsive/js/responsive.bootstrap4.min.js",
+                    "admin/resources/vendors/datatables-buttons/js/dataTables.buttons.min.js",
+
+                ],
+            ],
+            "styles" => [
+                "admin/resources/vendors/datatables-bs4/css/dataTables.bootstrap4.min.css",
+                "admin/resources/vendors/datatables-responsive/css/responsive.bootstrap4.min.css"
+            ]);
+
         //Include the view file ("views/list.admin.view.php").
-        view('faq', 'list.admin', ["faqList" => $faqList], 'admin');
+        view('faq', 'list.admin', ["faqList" => $faqList], 'admin', $includes);
     }
 
     public function faqEdit($id): void
@@ -43,7 +61,7 @@ class FaqController extends CoreController
         $faq->fetch($id);
 
 
-        view('faq', 'edit.admin', ["faq" => $faq], 'admin');
+        view('faq', 'edit.admin', ["faq" => $faq], 'admin', []);
     }
 
     public function faqEditPost($id): void
@@ -64,7 +82,7 @@ class FaqController extends CoreController
     {
         UsersController::isUserHasPermission("faq.create");
 
-        view('faq', 'add.admin', [], 'admin');
+        view('faq', 'add.admin', [], 'admin', []);
     }
 
     public function faqAddPost(): void
@@ -77,8 +95,8 @@ class FaqController extends CoreController
 
         //Get the author pseudo
         $user = new UsersModel;
-        $user->fetch($_SESSION['cmwUserId']);
-        $faq->author = $user->userPseudo;
+        $userEntity = $user->getUserById($_SESSION['cmwUserId']);
+        $faq->author = $userEntity->getId();
 
         $faq->faqCreate();
 
@@ -112,6 +130,6 @@ class FaqController extends CoreController
         $faqList = $faq->fetchAll();
 
         //Include the public view file ("public/themes/$themePath/views/faq/main.view.php")
-        view('faq', 'main', ["faq" => $faq, "faqList" => $faqList, "core" => $core, "menu" => $menu], 'public');
+        view('faq', 'main', ["faq" => $faq, "faqList" => $faqList, "core" => $core, "menu" => $menu], 'public', []);
     }
 }

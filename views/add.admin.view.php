@@ -51,5 +51,3 @@ $description = FAQ_DASHBOARD_DESC;
         </div>
     </div>
 <?php $content = ob_get_clean(); ?>
-
-<?php require(getenv("PATH_ADMIN_VIEW") . 'template.php'); ?>
