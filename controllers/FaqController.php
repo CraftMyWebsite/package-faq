@@ -5,9 +5,9 @@ namespace CMW\Controller\Faq;
 use CMW\Controller\CoreController;
 use CMW\Controller\Menus\MenusController;
 use CMW\Controller\users\UsersController;
-use CMW\Entity\Users\UserEntity;
 use CMW\Model\faq\FaqModel;
 use CMW\Model\users\UsersModel;
+use JetBrains\PhpStorm\NoReturn;
 
 /**
  * Class: @faqController
@@ -19,18 +19,21 @@ class FaqController extends CoreController
 {
 
     public static string $themePath;
+    private FaqModel $faqModel;
 
     public function __construct($themePath = null)
     {
         parent::__construct($themePath);
+        $this->faqModel = new FaqModel();
+
     }
 
     public function faqList(): void
     {
         UsersController::isUserHasPermission("faq.show");
 
-        $faq = new FaqModel();
-        $faqList = $faq->fetchAll();
+
+        $faqList = $this->faqModel->getFaqs();
 
         $includes = array(
             "scripts" => [
@@ -57,22 +60,22 @@ class FaqController extends CoreController
     {
         UsersController::isUserHasPermission("faq.edit");
 
-        $faq = new FaqModel();
-        $faq->fetch($id);
+
+        $faq = $this->faqModel->getFaqById($id);
 
 
         view('faq', 'edit.admin', ["faq" => $faq], 'admin', []);
     }
 
-    public function faqEditPost($id): void
+    #[NoReturn] public function faqEditPost($id): void
     {
         UsersController::isUserHasPermission("faq.edit");
 
-        $faq = new FaqModel();
-        $faq->faqId = $id;
-        $faq->question = filter_input(INPUT_POST, "question", FILTER_SANITIZE_STRING);
-        $faq->response = filter_input(INPUT_POST, "response", FILTER_SANITIZE_STRING);
-        $faq->update();
+
+        $question = filter_input(INPUT_POST, "question", FILTER_SANITIZE_STRING);
+        $response = filter_input(INPUT_POST, "response", FILTER_SANITIZE_STRING);
+
+        $this->faqModel->updateFaq($id, $question, $response);
 
         header("location: ../edit/" . $id);
         die();
@@ -89,28 +92,27 @@ class FaqController extends CoreController
     {
         UsersController::isUserHasPermission("faq.create");
 
-        $faq = new FaqModel();
-        $faq->question = filter_input(INPUT_POST, "question", FILTER_SANITIZE_STRING);
-        $faq->response = filter_input(INPUT_POST, "response", FILTER_SANITIZE_STRING);
+        $question = filter_input(INPUT_POST, "question", FILTER_SANITIZE_STRING);
+        $response = filter_input(INPUT_POST, "response", FILTER_SANITIZE_STRING);
 
         //Get the author pseudo
         $user = new UsersModel;
         $userEntity = $user->getUserById($_SESSION['cmwUserId']);
-        $faq->author = $userEntity->getId();
+        $userId = $userEntity->getId();
 
-        $faq->faqCreate();
+        $this->faqModel->createFaq($question, $response, $userId);
 
         header("location: ../faq/list");
 
     }
 
-    public function faqDelete(): void
+    #[NoReturn] public function faqDelete(): void
     {
         UsersController::isUserHasPermission("faq.delete");
 
-        $faq = new FaqModel();
-        $faq->faqId = filter_input(INPUT_POST, "id", FILTER_SANITIZE_NUMBER_INT);
-        $faq->delete();
+
+        $faqId = filter_input(INPUT_POST, "id", FILTER_SANITIZE_NUMBER_INT);
+        $this->faqModel->deleteFaq($faqId);
 
         header("location: ../faq/list");
         die();
@@ -127,7 +129,7 @@ class FaqController extends CoreController
         $menu = new MenusController();
 
         $faq = new FaqModel();
-        $faqList = $faq->fetchAll();
+        $faqList = $faq->getFaqs();
 
         //Include the public view file ("public/themes/$themePath/views/faq/main.view.php")
         view('faq', 'main', ["faq" => $faq, "faqList" => $faqList, "core" => $core, "menu" => $menu], 'public', []);
