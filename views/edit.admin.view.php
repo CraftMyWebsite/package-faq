@@ -1,7 +1,8 @@
 <?php
 $title = FAQ_DASHBOARD_EDIT_TITLE;
 $description = FAQ_DASHBOARD_DESC;
-/* @var \CMW\Controller\Faq\FaqController $faq */
+
+/* @var \CMW\Entity\Faq\FaqEntity $faq */
 ?>
 
 <?php ob_start(); ?>
@@ -14,7 +15,7 @@ $description = FAQ_DASHBOARD_DESC;
 
                             <div class="card-header">
                                 <h3 class="card-title"><?= FAQ_DASHBOARD_TABLE_EDIT_TITLE ?>
-                                    <strong><?= $faq->faqId ?></strong></h3>
+                                    <strong><?= $faq->getFaqId() ?></strong></h3>
                             </div>
 
                             <div class="card-body">
@@ -26,7 +27,7 @@ $description = FAQ_DASHBOARD_DESC;
                                     </div>
                                     <input type="text" name="question" class="form-control"
                                            placeholder="<?= FAQ_DASHBOARD_ADD_QUESTION_PLACEHOLDER ?>"
-                                           value="<?= $faq->question ?>" required>
+                                           value="<?= $faq->getQuestion() ?>" required>
 
                                 </div>
 
@@ -37,7 +38,7 @@ $description = FAQ_DASHBOARD_DESC;
                                     </div>
                                     <input type="text" name="response" class="form-control"
                                            placeholder="<?= FAQ_DASHBOARD_ADD_RESPONSE_PLACEHOLDER ?>"
-                                           value="<?= $faq->response ?>" required>
+                                           value="<?= $faq->getResponse() ?>" required>
                                 </div>
 
                             </div>

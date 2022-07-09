@@ -2,10 +2,10 @@
 
 namespace CMW\Model\Faq;
 
+use CMW\Entity\Faq\FaqEntity;
 use CMW\Model\Manager;
 
-use PDO;
-use stdClass;
+use CMW\Model\Users\UsersModel;
 
 /**
  * Class @faqModel
@@ -15,100 +15,104 @@ use stdClass;
  */
 class FaqModel extends Manager
 {
-    public string $question;
-    public string $response;
-    public string $author;
-    public int $faqId;
 
     // Create a new faq
-    public function faqCreate(): void
+    public function createFaq(string $question, string $response, string $author): ?FaqEntity
     {
         $var = array(
-            'question' => $this->question,
-            'response' => $this->response,
-            'author' => $this->author
+            'question' => $question,
+            'response' => $response,
+            'author' => $author
         );
 
-        $sql = "INSERT INTO cmw_faq (question, response, author) VALUES (:question, :response, :author)";
-
-        $db = Manager::dbConnect();
-        $req = $db->prepare($sql);
-        $req->execute($var);
-    }
-
-    // Get faq list
-    public function fetchAll(): array
-    {
-        $sql = "SELECT * FROM cmw_faq";
-        $db = Manager::dbConnect();
-        $req = $db->prepare($sql);
-        $res = $req->execute();
-
-        if ($res) {
-            return $req->fetchAll();
-        }
-        return [];
-    }
-
-    //Fetch an FAQ
-    public function fetch($faqId): array
-    {
-        $var = array(
-            "faq_id" => $faqId
-        );
-
-        $sql = "SELECT * FROM cmw_faq WHERE faq_id=:faq_id";
+        $sql = "INSERT INTO cmw_faq (faq_question, faq_response, faq_author) VALUES (:question, :response, :author)";
 
         $db = Manager::dbConnect();
         $req = $db->prepare($sql);
 
         if ($req->execute($var)) {
-            $result = $req->fetch();
-            foreach ($result as $key => $property) {
-
-                //to camel case all keys
-                $key = explode('_', $key);
-                $firstElement = array_shift($key);
-                $key = array_map('ucfirst', $key);
-                array_unshift($key, $firstElement);
-                $key = implode('', $key);
-
-                if (property_exists(FaqModel::class, $key)) {
-                    $this->$key = $property;
-                }
-            }
+            $id = $db->lastInsertId();
+            return $this->getFaqById($id);
         }
-        return [];
+
+        return null;
+    }
+
+    // Get faq list
+    public function getFaqs(): array
+    {
+        $sql = "SELECT faq_id FROM cmw_faq";
+        $db = Manager::dbConnect();
+
+        $res = $db->prepare($sql);
+
+        if (!$res->execute()) {
+            return array();
+        }
+
+        $toReturn = array();
+
+        while ($page = $res->fetch()) {
+            $toReturn[] = $this->getFaqById($page["faq_id"]);
+        }
+
+        return $toReturn;
+    }
+
+    //Fetch an FAQ
+    public function getFaqById($faqId): ?FaqEntity
+    {
+
+        $sql = "SELECT * FROM cmw_faq WHERE faq_id=:faq_id";
+
+        $db = Manager::dbConnect();
+        $res = $db->prepare($sql);
+
+
+        if (!$res->execute(array("faq_id" => $faqId))) {
+            return null;
+        }
+
+        $res = $res->fetch();
+
+        $user = (new UsersModel())->getUserById($res["faq_author"]);
+
+        return new FaqEntity(
+            $res['faq_id'],
+            $res['faq_question'],
+            $res['faq_response'],
+            $user
+        );
     }
 
     //Edit an FAQ
-    public function update(): void
+    public function updateFaq(int $faqId, string $question, string $response): ?FaqEntity
     {
         $info = array(
-            "faq_id" => $this->faqId,
-            "question" => $this->question,
-            "response" => $this->response
+            "faq_id" => $faqId,
+            "question" => $question,
+            "response" => $response
         );
 
-        $sql = "UPDATE cmw_faq SET question=:question, response=:response WHERE faq_id=:faq_id";
+        $sql = "UPDATE cmw_faq SET faq_question=:question, faq_response=:response WHERE faq_id=:faq_id";
 
         $db = Manager::dbConnect();
         $req = $db->prepare($sql);
-        $req->execute($info);
+        if ($req->execute($info)) {
+            return $this->getFaqById($faqId);
+        }
+
+        return null;
     }
 
     //Delete an FAQ
-    public function delete(): void
+    public function deleteFaq(int $faqId): void
     {
-        $info = array(
-            "faq_id" => $this->faqId
-        );
-
         $sql = "DELETE FROM cmw_faq WHERE faq_id=:faq_id";
 
         $db = Manager::dbConnect();
         $req = $db->prepare($sql);
-        $req->execute($info);
+        $req->execute(array("faq_id" => $faqId));
     }
 
 }

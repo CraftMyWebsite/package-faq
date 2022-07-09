@@ -15,13 +15,17 @@ Tout d'abord veuillez créer un fichier dans le dossier ```view```de votre thèm
 
 Voici un exemple pour afficher toutes les faq (question / réponses)
 ```php
- <?php foreach ($faqList as $faq) : ?>
-        <ul>
-            <li><strong><?= $faq['question'] ?></strong></li> 
-            <ol><?= $faq['response'] ?></ol>
-        </ul>
- <?php endforeach; ?>
+<?php /* @var \CMW\Entity\Faq\FaqEntity[] $faqList */
+   foreach ($faqList as $faq) : ?>
+       <ul>
+           <li><strong><?= $faq->getQuestion() ?></strong></li>
+           <ol><?= $faq->getResponse() ?></ol>
+           <ol><?= $faq->getAuthor()->getUsername() ?></ol>
+       </ul>
+   <?php endforeach; ?>
 ```
+
+Pour accéder à votre page FAQ rendez-vous à cette url → ``monsite.fr/faq``
 
 
 > Version: `V1.0`

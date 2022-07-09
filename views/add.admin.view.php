@@ -1,5 +1,5 @@
 <?php
-$title = FAQ_DASHBOARD_TITLE;
+$title = FAQ_DASHBOARD_ADD_TITLE;
 $description = FAQ_DASHBOARD_DESC;
 ?>
 
