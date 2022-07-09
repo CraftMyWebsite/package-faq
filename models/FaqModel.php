@@ -17,12 +17,12 @@ class FaqModel extends Manager
 {
 
     // Create a new faq
-    public function createFaq(string $question, string $response, string $author): ?FaqEntity
+    public function createFaq(string $question, string $response, int $authorId): ?FaqEntity
     {
         $var = array(
             'question' => $question,
             'response' => $response,
-            'author' => $author
+            'author' => $authorId
         );
 
         $sql = "INSERT INTO cmw_faq (faq_question, faq_response, faq_author) VALUES (:question, :response, :author)";
@@ -52,8 +52,8 @@ class FaqModel extends Manager
 
         $toReturn = array();
 
-        while ($page = $res->fetch()) {
-            $toReturn[] = $this->getFaqById($page["faq_id"]);
+        while ($faq = $res->fetch()) {
+            $toReturn[] = $this->getFaqById($faq["faq_id"]);
         }
 
         return $toReturn;
