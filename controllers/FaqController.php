@@ -70,8 +70,8 @@ class FaqController extends CoreController
 
         $faq = new FaqModel();
         $faq->faqId = $id;
-        $faq->question = filter_input(INPUT_POST, "question");
-        $faq->response = filter_input(INPUT_POST, "response");
+        $faq->question = filter_input(INPUT_POST, "question", FILTER_SANITIZE_STRING);
+        $faq->response = filter_input(INPUT_POST, "response", FILTER_SANITIZE_STRING);
         $faq->update();
 
         header("location: ../edit/" . $id);
@@ -90,8 +90,8 @@ class FaqController extends CoreController
         UsersController::isUserHasPermission("faq.create");
 
         $faq = new FaqModel();
-        $faq->question = filter_input(INPUT_POST, "question");
-        $faq->response = filter_input(INPUT_POST, "response");
+        $faq->question = filter_input(INPUT_POST, "question", FILTER_SANITIZE_STRING);
+        $faq->response = filter_input(INPUT_POST, "response", FILTER_SANITIZE_STRING);
 
         //Get the author pseudo
         $user = new UsersModel;
@@ -109,7 +109,7 @@ class FaqController extends CoreController
         UsersController::isUserHasPermission("faq.delete");
 
         $faq = new FaqModel();
-        $faq->faqId = filter_input(INPUT_POST, "id");
+        $faq->faqId = filter_input(INPUT_POST, "id", FILTER_SANITIZE_NUMBER_INT);
         $faq->delete();
 
         header("location: ../faq/list");
