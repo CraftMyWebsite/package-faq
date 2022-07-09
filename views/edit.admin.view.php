@@ -5,7 +5,6 @@ $description = FAQ_DASHBOARD_DESC;
 /* @var \CMW\Entity\Faq\FaqEntity $faq */
 ?>
 
-<?php ob_start(); ?>
     <div class="content">
         <div class="container-fluid">
             <div class="row">
@@ -55,4 +54,3 @@ $description = FAQ_DASHBOARD_DESC;
             </div>
         </div>
     </div>
-<?php $content = ob_get_clean(); ?>

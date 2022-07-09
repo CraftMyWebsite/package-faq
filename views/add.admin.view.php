@@ -3,7 +3,6 @@ $title = FAQ_DASHBOARD_ADD_TITLE;
 $description = FAQ_DASHBOARD_DESC;
 ?>
 
-<?php ob_start(); ?>
     <div class="content">
         <div class="container-fluid">
             <div class="row">
@@ -50,4 +49,3 @@ $description = FAQ_DASHBOARD_DESC;
             </div>
         </div>
     </div>
-<?php $content = ob_get_clean(); ?>

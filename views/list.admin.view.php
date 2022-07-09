@@ -36,8 +36,6 @@ $description = FAQ_DASHBOARD_DESC;
     });
 </script>'; ?>
 
-<?php ob_start(); ?>
-
     <div class="content">
 
         <div class="container-fluid">
@@ -105,5 +103,3 @@ $description = FAQ_DASHBOARD_DESC;
         </div>
 
     </div>
-
-<?php $content = ob_get_clean(); ?>
