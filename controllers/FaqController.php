@@ -30,7 +30,7 @@ class FaqController extends CoreController
 
     public function faqList(): void
     {
-        UsersController::isUserHasPermission("faq.show");
+        UsersController::redirectIfNotHavePermissions("core.dashboard", "faq.show");
 
 
         $faqList = $this->faqModel->getFaqs();
@@ -58,7 +58,7 @@ class FaqController extends CoreController
 
     public function faqEdit($id): void
     {
-        UsersController::isUserHasPermission("faq.edit");
+        UsersController::redirectIfNotHavePermissions("core.dashboard", "faq.edit");
 
 
         $faq = $this->faqModel->getFaqById($id);
@@ -83,14 +83,14 @@ class FaqController extends CoreController
 
     public function faqAdd(): void
     {
-        UsersController::isUserHasPermission("faq.create");
+        UsersController::redirectIfNotHavePermissions("core.dashboard", "faq.create");
 
         view('faq', 'add.admin', [], 'admin', []);
     }
 
     public function faqAddPost(): void
     {
-        UsersController::isUserHasPermission("faq.create");
+        UsersController::redirectIfNotHavePermissions("core.dashboard", "faq.create");
 
         $question = filter_input(INPUT_POST, "question", FILTER_SANITIZE_STRING);
         $response = filter_input(INPUT_POST, "response", FILTER_SANITIZE_STRING);
@@ -108,7 +108,7 @@ class FaqController extends CoreController
 
     #[NoReturn] public function faqDelete(): void
     {
-        UsersController::isUserHasPermission("faq.delete");
+        UsersController::redirectIfNotHavePermissions("core.dashboard", "faq.delete");
 
 
         $faqId = filter_input(INPUT_POST, "id", FILTER_SANITIZE_NUMBER_INT);
