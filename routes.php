@@ -2,8 +2,6 @@
 
 use CMW\Controller\faq\FaqController;
 
-require_once('Lang/'.getenv("LOCALE").'.php');
-
 /** @var $router router Main router */
 
 //Public pages
