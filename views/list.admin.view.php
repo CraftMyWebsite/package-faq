@@ -73,13 +73,8 @@ $description = FAQ_DASHBOARD_DESC;
                                             <a href="../faq/edit/<?= $faq->getFaqId() ?>" class="btn btn-warning"><i
                                                         class="fas fa-edit"></i></a>
 
-                                            <form action="../faq/delete" method="post" class="d-inline-block">
-                                                <input type="hidden" value="<?= $faq->getFaqId() ?>" name="id">
-                                                <button type="submit" class="btn btn-danger">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </button>
-                                            </form>
-
+                                            <a href="../faq/delete/<?= $faq->getFaqId() ?>" class="btn btn-danger"><i
+                                                        class="fas fa-trash-alt"></i></a>
                                         </td>
                                     </tr>
                                 <?php endforeach; ?>

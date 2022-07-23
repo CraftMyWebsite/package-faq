@@ -7,6 +7,8 @@ use CMW\Controller\Menus\MenusController;
 use CMW\Controller\users\UsersController;
 use CMW\Model\faq\FaqModel;
 use CMW\Model\users\UsersModel;
+use CMW\Router\Link;
+use CMW\Utils\View;
 use JetBrains\PhpStorm\NoReturn;
 
 /**
@@ -28,6 +30,8 @@ class FaqController extends CoreController
 
     }
 
+    #[Link(path: "/", method: Link::GET, scope: "/cmw-admin/faq")]
+    #[Link("/list", Link::GET, [], "/cmw-admin/faq")]
     public function faqList(): void
     {
         UsersController::redirectIfNotHavePermissions("core.dashboard", "faq.show");
@@ -35,65 +39,63 @@ class FaqController extends CoreController
 
         $faqList = $this->faqModel->getFaqs();
 
-        $includes = array(
-            "scripts" => [
-                "before" => [
-                    "admin/resources/vendors/bootstrap/js/bootstrap.bundle.min.js",
-                    "admin/resources/vendors/datatables/jquery.dataTables.min.js",
-                    "admin/resources/vendors/datatables-bs4/js/dataTables.bootstrap4.min.js",
-                    "admin/resources/vendors/datatables-responsive/js/dataTables.responsive.min.js",
-                    "admin/resources/vendors/datatables-responsive/js/responsive.bootstrap4.min.js",
-                    "admin/resources/vendors/datatables-buttons/js/dataTables.buttons.min.js",
-
-                ],
-            ],
-            "styles" => [
-                "admin/resources/vendors/datatables-bs4/css/dataTables.bootstrap4.min.css",
-                "admin/resources/vendors/datatables-responsive/css/responsive.bootstrap4.min.css"
-            ]);
 
         //Include the view file ("views/list.admin.view.php").
-        view('faq', 'list.admin', ["faqList" => $faqList], 'admin', $includes);
+        View::createAdminView('faq', 'list')
+            ->addScriptBefore("admin/resources/vendors/bootstrap/js/bootstrap.bundle.min.js",
+                "admin/resources/vendors/datatables/jquery.dataTables.min.js",
+                "admin/resources/vendors/datatables-bs4/js/dataTables.bootstrap4.min.js",
+                "admin/resources/vendors/datatables-responsive/js/dataTables.responsive.min.js",
+                "admin/resources/vendors/datatables-responsive/js/responsive.bootstrap4.min.js",
+                "admin/resources/vendors/datatables-buttons/js/dataTables.buttons.min.js")
+            ->addStyle("admin/resources/vendors/datatables-bs4/css/dataTables.bootstrap4.min.css",
+                "admin/resources/vendors/datatables-responsive/css/responsive.bootstrap4.min.css")
+            ->addVariableList(["faqList" => $faqList])
+            ->view();
     }
 
-    public function faqEdit($id): void
+    #[Link("/edit/:id", Link::GET, ["id" => "[0-9]+"], "/cmw-admin/faq")]
+    public function faqEdit(int $id): void
+    {
+        UsersController::redirectIfNotHavePermissions("core.dashboard", "faq.edit");
+
+        $faq = $this->faqModel->getFaqById($id);
+
+        View::createAdminView('faq', 'edit')
+            ->addVariableList(["faq" => $faq])
+            ->view();
+    }
+
+    #[Link("/edit/:id", Link::POST, ["id" => "[0-9]+"], "/cmw-admin/faq")]
+    #[NoReturn] public function faqEditPost(int $id): void
     {
         UsersController::redirectIfNotHavePermissions("core.dashboard", "faq.edit");
 
 
-        $faq = $this->faqModel->getFaqById($id);
-
-
-        view('faq', 'edit.admin', ["faq" => $faq], 'admin', []);
-    }
-
-    #[NoReturn] public function faqEditPost($id): void
-    {
-        UsersController::isUserHasPermission("faq.edit");
-
-
-        $question = filter_input(INPUT_POST, "question", FILTER_SANITIZE_STRING);
-        $response = filter_input(INPUT_POST, "response", FILTER_SANITIZE_STRING);
+        $question = htmlspecialchars(filter_input(INPUT_POST, "question"));
+        $response = htmlspecialchars(filter_input(INPUT_POST, "response"));
 
         $this->faqModel->updateFaq($id, $question, $response);
 
         header("location: ../edit/" . $id);
-        die();
     }
 
+    #[Link("/add", Link::GET, [], "/cmw-admin/faq")]
     public function faqAdd(): void
     {
         UsersController::redirectIfNotHavePermissions("core.dashboard", "faq.create");
 
-        view('faq', 'add.admin', [], 'admin', []);
+        View::createAdminView('faq', 'add')
+            ->view();
     }
 
+    #[Link("/add", Link::POST, [], "/cmw-admin/faq")]
     public function faqAddPost(): void
     {
         UsersController::redirectIfNotHavePermissions("core.dashboard", "faq.create");
 
-        $question = filter_input(INPUT_POST, "question", FILTER_SANITIZE_STRING);
-        $response = filter_input(INPUT_POST, "response", FILTER_SANITIZE_STRING);
+        $question = htmlspecialchars(filter_input(INPUT_POST, "question"));
+        $response = htmlspecialchars(filter_input(INPUT_POST, "response"));
 
         //Get the author pseudo
         $user = new UsersModel;
@@ -103,24 +105,22 @@ class FaqController extends CoreController
         $this->faqModel->createFaq($question, $response, $userId);
 
         header("location: ../faq/list");
-
     }
 
-    #[NoReturn] public function faqDelete(): void
+    #[Link("/delete/:id", Link::GET, ["id" => "[0-9]+"], "/cmw-admin/faq")]
+    #[NoReturn] public function faqDelete(int $id): void
     {
         UsersController::redirectIfNotHavePermissions("core.dashboard", "faq.delete");
 
+        $this->faqModel->deleteFaq($id);
 
-        $faqId = filter_input(INPUT_POST, "id", FILTER_SANITIZE_NUMBER_INT);
-        $this->faqModel->deleteFaq($faqId);
-
-        header("location: ../faq/list");
-        die();
+        header("location: ../../faq/list");
     }
 
 
     /* //////////////////// FRONT PUBLIC //////////////////// */
 
+    #[Link('/faq', Link::GET)]
     public function frontFaqPublic(): void
     {
 
@@ -132,6 +132,8 @@ class FaqController extends CoreController
         $faqList = $faq->getFaqs();
 
         //Include the public view file ("public/themes/$themePath/views/faq/main.view.php")
-        view('faq', 'main', ["faq" => $faq, "faqList" => $faqList, "core" => $core, "menu" => $menu], 'public', []);
+        $view = new View('faq', 'main');
+        $view->addVariableList(["faq" => $faq, "faqList" => $faqList, "core" => $core, "menu" => $menu]);
+        $view->view();
     }
 }
