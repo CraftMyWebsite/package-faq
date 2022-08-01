@@ -123,17 +123,12 @@ class FaqController extends CoreController
     #[Link('/faq', Link::GET)]
     public function frontFaqPublic(): void
     {
-
-        //Default controllers (important)
-        $core = new CoreController();
-        $menu = new MenusController();
-
         $faq = new FaqModel();
         $faqList = $faq->getFaqs();
 
         //Include the public view file ("public/themes/$themePath/views/faq/main.view.php")
         $view = new View('faq', 'main');
-        $view->addVariableList(["faq" => $faq, "faqList" => $faqList, "core" => $core, "menu" => $menu]);
+        $view->addVariableList(["faq" => $faq, "faqList" => $faqList]);
         $view->view();
     }
 }
