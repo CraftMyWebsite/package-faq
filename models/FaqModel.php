@@ -3,7 +3,7 @@
 namespace CMW\Model\Faq;
 
 use CMW\Entity\Faq\FaqEntity;
-use CMW\Model\Manager;
+use CMW\Manager\Database\DatabaseManager;
 
 use CMW\Model\Users\UsersModel;
 
@@ -13,7 +13,7 @@ use CMW\Model\Users\UsersModel;
  * @author Teyir
  * @version 1.0
  */
-class FaqModel extends Manager
+class FaqModel extends DatabaseManager
 {
 
     // Create a new faq
@@ -27,7 +27,7 @@ class FaqModel extends Manager
 
         $sql = "INSERT INTO cmw_faq (faq_question, faq_response, faq_author) VALUES (:question, :response, :author)";
 
-        $db = Manager::dbConnect();
+        $db = DatabaseManager::dbConnect();
         $req = $db->prepare($sql);
 
         if ($req->execute($var)) {
@@ -42,7 +42,7 @@ class FaqModel extends Manager
     public function getFaqs(): array
     {
         $sql = "SELECT faq_id FROM cmw_faq";
-        $db = Manager::dbConnect();
+        $db = DatabaseManager::dbConnect();
 
         $res = $db->prepare($sql);
 
@@ -65,7 +65,7 @@ class FaqModel extends Manager
 
         $sql = "SELECT * FROM cmw_faq WHERE faq_id=:faq_id";
 
-        $db = Manager::dbConnect();
+        $db = DatabaseManager::dbConnect();
         $res = $db->prepare($sql);
 
 
@@ -96,7 +96,7 @@ class FaqModel extends Manager
 
         $sql = "UPDATE cmw_faq SET faq_question=:question, faq_response=:response WHERE faq_id=:faq_id";
 
-        $db = Manager::dbConnect();
+        $db = DatabaseManager::dbConnect();
         $req = $db->prepare($sql);
         if ($req->execute($info)) {
             return $this->getFaqById($faqId);
@@ -110,7 +110,7 @@ class FaqModel extends Manager
     {
         $sql = "DELETE FROM cmw_faq WHERE faq_id=:faq_id";
 
-        $db = Manager::dbConnect();
+        $db = DatabaseManager::dbConnect();
         $req = $db->prepare($sql);
         $req->execute(array("faq_id" => $faqId));
     }
