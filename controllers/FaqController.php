@@ -2,7 +2,7 @@
 
 namespace CMW\Controller\Faq;
 
-use CMW\Controller\CoreController;
+use CMW\Controller\Core\CoreController;
 use CMW\Controller\Menus\MenusController;
 use CMW\Controller\users\UsersController;
 use CMW\Model\faq\FaqModel;
