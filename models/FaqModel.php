@@ -27,7 +27,7 @@ class FaqModel extends DatabaseManager
 
         $sql = "INSERT INTO cmw_faq (faq_question, faq_response, faq_author) VALUES (:question, :response, :author)";
 
-        $db = DatabaseManager::dbConnect();
+        $db = self::getInstance();
         $req = $db->prepare($sql);
 
         if ($req->execute($var)) {
@@ -42,7 +42,7 @@ class FaqModel extends DatabaseManager
     public function getFaqs(): array
     {
         $sql = "SELECT faq_id FROM cmw_faq";
-        $db = DatabaseManager::dbConnect();
+        $db = self::getInstance();
 
         $res = $db->prepare($sql);
 
@@ -65,7 +65,7 @@ class FaqModel extends DatabaseManager
 
         $sql = "SELECT * FROM cmw_faq WHERE faq_id=:faq_id";
 
-        $db = DatabaseManager::dbConnect();
+        $db = self::getInstance();
         $res = $db->prepare($sql);
 
 
@@ -96,7 +96,7 @@ class FaqModel extends DatabaseManager
 
         $sql = "UPDATE cmw_faq SET faq_question=:question, faq_response=:response WHERE faq_id=:faq_id";
 
-        $db = DatabaseManager::dbConnect();
+        $db = self::getInstance();
         $req = $db->prepare($sql);
         if ($req->execute($info)) {
             return $this->getFaqById($faqId);
@@ -110,7 +110,7 @@ class FaqModel extends DatabaseManager
     {
         $sql = "DELETE FROM cmw_faq WHERE faq_id=:faq_id";
 
-        $db = DatabaseManager::dbConnect();
+        $db = self::getInstance();
         $req = $db->prepare($sql);
         $req->execute(array("faq_id" => $faqId));
     }
