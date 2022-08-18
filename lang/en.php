@@ -1,23 +1,32 @@
 <?php
 
-/* ADMIN PANEL */
-const FAQ_DASHBOARD_TITLE = "FAQ - Listing";
-const FAQ_DASHBOARD_DESC = "Manage your FAQ";
+return [
+    "dashboard" => [
+        "title" => "FAQ - Listing",
+        "desc" => "Manage your FAQ",
+        "table" =>  [
+            "title" => "Listing your FAQ",
+            "question" => "Questions",
+            "response" => "Responses",
+            "author" => "Author",
+            "editing" => "Modifications",
+            "add" => "Add an FAQ",
+            "edit" => "Edit the FAQ n° %faq_number%"
+        ],
+        "add" => [
+            "title" => "FAQ - Additions",
+            "question" =>  [
+                "label" => "Question",
+                "placeholder" => "Add a question",
+            ],
+            "response" => [
+                "label" => "Response",
+                "placeholder" => "Add a response",
+            ],
+        ],
+        "edit" => [
+            "title" => "FAQ - Modifications"
+        ],
+    ],
 
-const FAQ_DASHBOARD_TABLE_TITLE = "Listing your FAQ";
-const FAQ_DASHBOARD_TABLE_QUESTION = "Questions";
-const FAQ_DASHBOARD_TABLE_RESPONSE = "Responses";
-const FAQ_DASHBOARD_TABLE_AUTHOR = "Author";
-const FAQ_DASHBOARD_TABLE_EDITING = "Modifications";
-
-const FAQ_DASHBOARD_ADD_TITLE = "FAQ - Additions";
-const FAQ_DASHBOARD_TABLE_ADD_TITLE = "Add an FAQ";
-
-
-const FAQ_DASHBOARD_ADD_QUESTION_PLACEHOLDER = "Add a question";
-const FAQ_DASHBOARD_ADD_QUESTION_LABEL = "Question";
-const FAQ_DASHBOARD_ADD_RESPONSE_PLACEHOLDER = "Add a response";
-const FAQ_DASHBOARD_ADD_RESPONSE_LABEL = "Response";
-
-const FAQ_DASHBOARD_EDIT_TITLE = "FAQ - Modifications";
-const FAQ_DASHBOARD_TABLE_EDIT_TITLE = "Edit the FAQ n° ";
+];
