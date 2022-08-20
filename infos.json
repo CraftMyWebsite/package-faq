@@ -1,23 +1,27 @@
 {
-    "name": "faq",
-    "name_menu": "FAQ",
-    "icon_menu": "fas fa-question-circle",
-    "description": "Gérer et afficher les FAQ sur votre site",
-    "version": "1.0.0",
-    "author": "Teyir",
-    "url_menu": "",
-    "urls_submenu": {
-        "Liste":"faq/list",
-        "Ajouter":"faq/add"
-    },
-    "urls_submenu_en": {
-        "List":"faq/list",
-        "Add":"faq/add"
-    },
-    "permissions": {
-        "Afficher les FAQ": "faq.show",
-        "Créer une FAQ": "faq.create",
-        "Modifier une FAQ": "faq.edit",
-        "Supprimer une FAQ": "faq.delete"
+  "name": "faq",
+  "menus": [
+    {
+      "name_menu": "FAQ",
+      "icon_menu": "fas fa-question-circle",
+      "url_menu": "",
+      "urls_submenu": {
+        "Liste": "faq/list",
+        "Ajouter": "faq/add"
+      },
+      "urls_submenu_en": {
+        "List": "faq/list",
+        "Add": "faq/add"
+      }
     }
+  ],
+  "permissions": {
+    "Afficher les FAQ": "faq.show",
+    "Créer une FAQ": "faq.create",
+    "Modifier une FAQ": "faq.edit",
+    "Supprimer une FAQ": "faq.delete"
+  },
+  "description": "Gérer et afficher les FAQ sur votre site",
+  "version": "1.0.0",
+  "author": "Teyir"
 }
