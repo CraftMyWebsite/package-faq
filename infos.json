@@ -15,12 +15,6 @@
       }
     }
   ],
-  "permissions": {
-    "Afficher les FAQ": "faq.show",
-    "Créer une FAQ": "faq.create",
-    "Modifier une FAQ": "faq.edit",
-    "Supprimer une FAQ": "faq.delete"
-  },
   "description": "Gérer et afficher les FAQ sur votre site",
   "version": "1.0.0",
   "author": "Teyir"
