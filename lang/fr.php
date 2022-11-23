@@ -2,7 +2,7 @@
 
 return [
     "dashboard" => [
-        "title" => "FAQ - Liste",
+        "title" => "FAQ - Gestion",
         "desc" => "Gestion des FAQ de votre site",
         "table" =>  [
             "title" => "Liste des FAQ",

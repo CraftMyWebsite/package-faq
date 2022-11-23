@@ -31,7 +31,7 @@ class FaqController extends CoreController
     }
 
     #[Link(path: "/", method: Link::GET, scope: "/cmw-admin/faq")]
-    #[Link("/list", Link::GET, [], "/cmw-admin/faq")]
+    #[Link("/manage", Link::GET, [], "/cmw-admin/faq")]
     public function faqList(): void
     {
         UsersController::redirectIfNotHavePermissions("core.dashboard", "faq.show");
@@ -41,15 +41,10 @@ class FaqController extends CoreController
 
 
         //Include the view file ("views/list.admin.view.php").
-        View::createAdminView('faq', 'list')
-            ->addScriptBefore("admin/resources/vendors/bootstrap/js/bootstrap.bundle.min.js",
-                "admin/resources/vendors/datatables/jquery.dataTables.min.js",
-                "admin/resources/vendors/datatables-bs4/js/dataTables.bootstrap4.min.js",
-                "admin/resources/vendors/datatables-responsive/js/dataTables.responsive.min.js",
-                "admin/resources/vendors/datatables-responsive/js/responsive.bootstrap4.min.js",
-                "admin/resources/vendors/datatables-buttons/js/dataTables.buttons.min.js")
-            ->addStyle("admin/resources/vendors/datatables-bs4/css/dataTables.bootstrap4.min.css",
-                "admin/resources/vendors/datatables-responsive/css/responsive.bootstrap4.min.css")
+        View::createAdminView('faq', 'manage')
+            ->addStyle("admin/resources/vendors/simple-datatables/style.css","admin/resources/assets/css/pages/simple-datatables.css")
+            ->addScriptAfter("admin/resources/vendors/simple-datatables/umd/simple-datatables.js",
+                "admin/resources/assets/js/pages/simple-datatables.js")
             ->addVariableList(["faqList" => $faqList])
             ->view();
     }
@@ -80,16 +75,16 @@ class FaqController extends CoreController
         header("location: ../edit/" . $id);
     }
 
-    #[Link("/add", Link::GET, [], "/cmw-admin/faq")]
+    #[Link("/manage", Link::GET, [], "/cmw-admin/faq")]
     public function faqAdd(): void
     {
         UsersController::redirectIfNotHavePermissions("core.dashboard", "faq.create");
 
-        View::createAdminView('faq', 'add')
+        View::createAdminView('faq', 'manage')
             ->view();
     }
 
-    #[Link("/add", Link::POST, [], "/cmw-admin/faq")]
+    #[Link("/manage", Link::POST, [], "/cmw-admin/faq")]
     public function faqAddPost(): void
     {
         UsersController::redirectIfNotHavePermissions("core.dashboard", "faq.create");
@@ -104,7 +99,7 @@ class FaqController extends CoreController
 
         $this->faqModel->createFaq($question, $response, $userId);
 
-        header("location: ../faq/list");
+        header("location: ../faq/manage");
     }
 
     #[Link("/delete/:id", Link::GET, ["id" => "[0-9]+"], "/cmw-admin/faq")]
@@ -114,7 +109,7 @@ class FaqController extends CoreController
 
         $this->faqModel->deleteFaq($id);
 
-        header("location: ../../faq/list");
+        header("location: ../../faq/manage");
     }
 
 

@@ -2,7 +2,7 @@
 
 return [
     "dashboard" => [
-        "title" => "FAQ - Listing",
+        "title" => "FAQ - Manage",
         "desc" => "Manage your FAQ",
         "table" =>  [
             "title" => "Listing your FAQ",
