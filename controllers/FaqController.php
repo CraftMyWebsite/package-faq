@@ -5,9 +5,11 @@ namespace CMW\Controller\Faq;
 use CMW\Controller\Core\CoreController;
 use CMW\Controller\Menus\MenusController;
 use CMW\Controller\users\UsersController;
+use CMW\Manager\Lang\LangManager;
 use CMW\Model\faq\FaqModel;
 use CMW\Model\users\UsersModel;
 use CMW\Router\Link;
+use CMW\Utils\Response;
 use CMW\Utils\View;
 use JetBrains\PhpStorm\NoReturn;
 
@@ -40,7 +42,7 @@ class FaqController extends CoreController
         $faqList = $this->faqModel->getFaqs();
 
 
-        //Include the view file ("views/list.admin.view.php").
+        //Include the view file ("views/manage.admin.view.php").
         View::createAdminView('faq', 'manage')
             ->addStyle("admin/resources/vendors/simple-datatables/style.css","admin/resources/assets/css/pages/simple-datatables.css")
             ->addScriptAfter("admin/resources/vendors/simple-datatables/umd/simple-datatables.js",
@@ -72,7 +74,10 @@ class FaqController extends CoreController
 
         $this->faqModel->updateFaq($id, $question, $response);
 
-        header("location: ../edit/" . $id);
+        Response::sendAlert("success", LangManager::translate("core.toaster.success"),
+            LangManager::translate("faq.dashboard.edit.toaster.success", vars: ["faq" => $question]));
+
+        header("location: ../../faq/manage");
     }
 
     #[Link("/manage", Link::GET, [], "/cmw-admin/faq")]
@@ -95,9 +100,12 @@ class FaqController extends CoreController
         //Get the author pseudo
         $user = new UsersModel;
         $userEntity = $user->getUserById($_SESSION['cmwUserId']);
-        $userId = $userEntity->getId();
+        $userId = $userEntity?->getId();
 
         $this->faqModel->createFaq($question, $response, $userId);
+
+        Response::sendAlert("success", LangManager::translate("core.toaster.success"),
+            LangManager::translate("faq.dashboard.add.toaster.success"));
 
         header("location: ../faq/manage");
     }
@@ -107,7 +115,12 @@ class FaqController extends CoreController
     {
         UsersController::redirectIfNotHavePermissions("core.dashboard", "faq.delete");
 
+        $faqQuestion = $this->faqModel->getFaqById($id)?->getQuestion();
+
         $this->faqModel->deleteFaq($id);
+
+        Response::sendAlert("success", LangManager::translate("core.toaster.success"),
+            LangManager::translate("faq.dashboard.delete.toaster.success", vars: ["faq" => $faqQuestion]));
 
         header("location: ../../faq/manage");
     }

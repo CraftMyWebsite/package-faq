@@ -3,6 +3,7 @@
   "menus": [
     {
       "name_menu_fr": "F.A.Q",
+      "name_menu_en": "F.A.Q",
       "icon_menu": "fas fa-question-circle",
       "url_menu": "faq/manage"
     }
