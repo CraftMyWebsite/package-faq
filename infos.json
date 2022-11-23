@@ -2,17 +2,10 @@
   "name": "faq",
   "menus": [
     {
-      "name_menu_fr": "FAQ",
+      "name_menu_fr": "F.A.Q",
+      "name_menu_en": "F.A.Q",
       "icon_menu": "fas fa-question-circle",
-      "url_menu": "",
-      "urls_submenu_fr": {
-        "Liste": "faq/list",
-        "Ajouter": "faq/add"
-      },
-      "urls_submenu_en": {
-        "List": "faq/list",
-        "Add": "faq/add"
-      }
+      "url_menu": "faq/manage"
     }
   ],
   "description": [

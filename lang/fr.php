@@ -2,9 +2,9 @@
 
 return [
     "dashboard" => [
-        "title" => "FAQ - Liste",
+        "title" => "FAQ - Gestion",
         "desc" => "Gestion des FAQ de votre site",
-        "table" =>  [
+        "table" => [
             "title" => "Liste des FAQ",
             "question" => "Questions",
             "response" => "Réponses",
@@ -15,7 +15,7 @@ return [
         ],
         "add" => [
             "title" => "FAQ - Ajouts",
-            "question" =>  [
+            "question" => [
                 "label" => "Question",
                 "placeholder" => "Ajouter une question",
             ],
@@ -23,9 +23,20 @@ return [
                 "label" => "Réponse",
                 "placeholder" => "Ajouter une réponse",
             ],
+            "toaster" => [
+                "success" => "FAQ ajoutée avec succès !"
+            ],
         ],
         "edit" => [
-            "title" => "FAQ - Modifications"
+            "title" => "FAQ - Modifications",
+            "toaster" => [
+                "success" => "FAQ %faq% modifiée avec succès !"
+            ],
+        ],
+        "delete" => [
+            "toaster" => [
+                "success" => "FAQ %faq% supprimée avec succès !"
+            ],
         ],
     ],
 
