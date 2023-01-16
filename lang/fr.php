@@ -13,6 +13,10 @@ return [
             "add" => "Ajouter une FAQ",
             "edit" => "Modifier la FAQ n° %faq_number%"
         ],
+        "modal" => [
+            "delete" => "Supression de :",
+            "deletealert" => "La supression est definitive.",
+        ],
         "add" => [
             "title" => "FAQ - Ajouts",
             "question" => [

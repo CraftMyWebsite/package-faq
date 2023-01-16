@@ -68,11 +68,33 @@ $description = LangManager::translate("faq.dashboard.desc");
                                 <a href="../faq/edit/<?= $faq->getFaqId() ?>">
                                     <i class="text-primary fa-solid fa-gears"></i>
                                 </a>
-                                <a href="../faq/delete/<?= $faq->getFaqId() ?>">
-                                    <i class="ms-2 text-danger fa-solid fa-trash"></i>
+                                <a type="button" data-bs-toggle="modal" data-bs-target="#delete-<?= $faq->getFaqId() ?>">
+                                    <i class="text-danger fas fa-trash-alt"></i>
                                 </a>
                             </td>
                         </tr>
+                        <div class="modal fade text-left" id="delete-<?= $faq->getFaqId() ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel160" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-danger">
+                                        <h5 class="modal-title white" id="myModalLabel160"><?= LangManager::translate("faq.dashboard.modal.delete") ?> <?= $faq->getQuestion() ?></h5>
+                                    </div>
+                                    <div class="modal-body">
+                                        <?= LangManager::translate("faq.dashboard.modal.deletealert") ?>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-light-secondary" data-bs-dismiss="modal">
+                                            <i class="bx bx-x d-block d-sm-none"></i>
+                                            <span class="d-none d-sm-block"><?= LangManager::translate("core.btn.close") ?></span>
+                                        </button>
+                                        <a href="../faq/delete/<?= $faq->getFaqId() ?>" class="btn btn-danger ml-1">
+                                            <i class="bx bx-check d-block d-sm-none"></i>
+                                            <span class="d-none d-sm-block"><?= LangManager::translate("core.btn.delete") ?></span>
+                                        </a>                                
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <?php endforeach; ?>
                     </tbody>
                 </table>
