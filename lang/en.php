@@ -13,6 +13,10 @@ return [
             "add" => "Add an FAQ",
             "edit" => "Edit the FAQ n° %faq_number%"
         ],
+        "modal" => [
+            "delete" => "Delete :",
+            "deletealert" => "The deletion is permanent.",
+        ],
         "add" => [
             "title" => "FAQ - Additions",
             "question" => [
