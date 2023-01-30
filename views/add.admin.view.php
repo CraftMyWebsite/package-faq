@@ -1,7 +1,7 @@
 <?php
 
 use CMW\Manager\Lang\LangManager;
-use CMW\Utils\SecurityService;
+use CMW\Manager\Security\SecurityManager;
 
 $title = LangManager::translate("faq.dashboard.title");
 $description = LangManager::translate("faq.dashboard.desc");
@@ -12,7 +12,7 @@ $description = LangManager::translate("faq.dashboard.desc");
             <div class="row">
                 <div class="col-12">
                     <form action="" method="post">
-                        <?php (new SecurityService())->insertHiddenToken() ?>
+                        <?php (new SecurityManager())->insertHiddenToken() ?>
                         <div class="card card-primary">
 
                             <div class="card-header">
