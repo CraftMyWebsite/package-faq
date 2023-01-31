@@ -1,7 +1,7 @@
 <?php
 
 use CMW\Manager\Lang\LangManager;
-use CMW\Utils\SecurityService;
+use CMW\Manager\Security\SecurityManager;
 
 $title = LangManager::translate("faq.dashboard.edit.title");
 $description = LangManager::translate("faq.dashboard.edit.desc");
@@ -20,7 +20,7 @@ $description = LangManager::translate("faq.dashboard.edit.desc");
         </div>
         <div class="card-body">
             <form action="" method="post">
-                    <?php (new SecurityService())->insertHiddenToken() ?>
+                    <?php (new SecurityManager())->insertHiddenToken() ?>
                 <h6><?= LangManager::translate("faq.dashboard.add.question.label") ?> :</h6>
                 <div class="form-group position-relative has-icon-left">
                     <input type="text" class="form-control" name="question" required
