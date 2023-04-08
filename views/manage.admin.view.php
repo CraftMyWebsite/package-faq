@@ -63,7 +63,7 @@ $description = LangManager::translate("faq.dashboard.desc");
                         <tr>
                             <td><?= $faq->getQuestion() ?></td>
                             <td><?= $faq->getResponse() ?></td>
-                            <td><?= $faq->getAuthor()->getUsername() ?></td>
+                            <td><?= $faq->getAuthor()->getPseudo() ?></td>
                             <td>
                                 <a href="../faq/edit/<?= $faq->getFaqId() ?>">
                                     <i class="text-primary fa-solid fa-gears"></i>

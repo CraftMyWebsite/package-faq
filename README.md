@@ -20,7 +20,7 @@ Voici un exemple pour afficher toutes les faq (question / réponses)
        <ul>
            <li><strong><?= $faq->getQuestion() ?></strong></li>
            <ol><?= $faq->getResponse() ?></ol>
-           <ol><?= $faq->getAuthor()->getUsername() ?></ol>
+           <ol><?= $faq->getAuthor()->getPseudo() ?></ol>
        </ul>
    <?php endforeach; ?>
 ```
