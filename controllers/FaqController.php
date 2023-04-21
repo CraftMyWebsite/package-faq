@@ -12,6 +12,7 @@ use CMW\Router\Link;
 use CMW\Utils\Response;
 use CMW\Manager\Views\View;
 use JetBrains\PhpStorm\NoReturn;
+use CMW\Utils\Redirect;
 
 /**
  * Class: @faqController
@@ -77,7 +78,7 @@ class FaqController extends CoreController
         Response::sendAlert("success", LangManager::translate("core.toaster.success"),
             LangManager::translate("faq.dashboard.edit.toaster.success", vars: ["faq" => $question]));
 
-        header("location: ../../faq/manage");
+        Redirect::redirect("cmw-admin/faq/manage");
     }
 
     #[Link("/manage", Link::GET, [], "/cmw-admin/faq")]
@@ -107,7 +108,7 @@ class FaqController extends CoreController
         Response::sendAlert("success", LangManager::translate("core.toaster.success"),
             LangManager::translate("faq.dashboard.add.toaster.success"));
 
-        header("location: ../faq/manage");
+        Redirect::redirect("cmw-admin/faq/manage");
     }
 
     #[Link("/delete/:id", Link::GET, ["id" => "[0-9]+"], "/cmw-admin/faq")]
@@ -122,7 +123,7 @@ class FaqController extends CoreController
         Response::sendAlert("success", LangManager::translate("core.toaster.success"),
             LangManager::translate("faq.dashboard.delete.toaster.success", vars: ["faq" => $faqQuestion]));
 
-        header("location: ../../faq/manage");
+        Redirect::redirect("cmw-admin/faq/manage");
     }
 
 
