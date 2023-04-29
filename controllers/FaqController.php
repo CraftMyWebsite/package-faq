@@ -137,7 +137,7 @@ class FaqController extends CoreController
         $faqList = $faq->getFaqs();
 
         //Include the Public view file ("Public/Themes/$themePath/Views/faq/main.view.php")
-        $view = new View('faq', 'main');
+        $view = new View('Faq', 'main');
         $view->addVariableList(["faq" => $faq, "faqList" => $faqList]);
         $view->view();
     }
