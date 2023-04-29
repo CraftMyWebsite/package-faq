@@ -33,8 +33,8 @@ class FaqController extends CoreController
 
     }
 
-    #[Link(path: "/", method: Link::GET, scope: "/cmw-admin/faq")]
-    #[Link("/manage", Link::GET, [], "/cmw-admin/faq")]
+    #[Link(path: "/", method: Link::GET, scope: "/cmw-Admin/faq")]
+    #[Link("/manage", Link::GET, [], "/cmw-Admin/faq")]
     public function faqList(): void
     {
         UsersController::redirectIfNotHavePermissions("core.dashboard", "faq.show");
@@ -45,14 +45,14 @@ class FaqController extends CoreController
 
         //Include the view file ("views/manage.admin.view.php").
         View::createAdminView('faq', 'manage')
-            ->addStyle("admin/resources/vendors/simple-datatables/style.css","admin/resources/assets/css/pages/simple-datatables.css")
-            ->addScriptAfter("admin/resources/vendors/simple-datatables/umd/simple-datatables.js",
-                "admin/resources/assets/js/pages/simple-datatables.js")
+            ->addStyle("Admin/Resources/Vendors/Simple-datatables/style.css","Admin/Resources/Assets/Css/Pages/simple-datatables.css")
+            ->addScriptAfter("Admin/Resources/Vendors/Simple-datatables/Umd/simple-datatables.js",
+                "Admin/Resources/Assets/Js/Pages/simple-datatables.js")
             ->addVariableList(["faqList" => $faqList])
             ->view();
     }
 
-    #[Link("/edit/:id", Link::GET, ["id" => "[0-9]+"], "/cmw-admin/faq")]
+    #[Link("/edit/:id", Link::GET, ["id" => "[0-9]+"], "/cmw-Admin/faq")]
     public function faqEdit(int $id): void
     {
         UsersController::redirectIfNotHavePermissions("core.dashboard", "faq.edit");
@@ -64,7 +64,7 @@ class FaqController extends CoreController
             ->view();
     }
 
-    #[Link("/edit/:id", Link::POST, ["id" => "[0-9]+"], "/cmw-admin/faq")]
+    #[Link("/edit/:id", Link::POST, ["id" => "[0-9]+"], "/cmw-Admin/faq")]
     #[NoReturn] public function faqEditPost(int $id): void
     {
         UsersController::redirectIfNotHavePermissions("core.dashboard", "faq.edit");
@@ -78,10 +78,10 @@ class FaqController extends CoreController
         Response::sendAlert("success", LangManager::translate("core.toaster.success"),
             LangManager::translate("faq.dashboard.edit.toaster.success", vars: ["faq" => $question]));
 
-        Redirect::redirect("cmw-admin/faq/manage");
+        Redirect::redirect("cmw-Admin/faq/manage");
     }
 
-    #[Link("/manage", Link::GET, [], "/cmw-admin/faq")]
+    #[Link("/manage", Link::GET, [], "/cmw-Admin/faq")]
     public function faqAdd(): void
     {
         UsersController::redirectIfNotHavePermissions("core.dashboard", "faq.create");
@@ -90,7 +90,7 @@ class FaqController extends CoreController
             ->view();
     }
 
-    #[Link("/manage", Link::POST, [], "/cmw-admin/faq")]
+    #[Link("/manage", Link::POST, [], "/cmw-Admin/faq")]
     public function faqAddPost(): void
     {
         UsersController::redirectIfNotHavePermissions("core.dashboard", "faq.create");
@@ -108,10 +108,10 @@ class FaqController extends CoreController
         Response::sendAlert("success", LangManager::translate("core.toaster.success"),
             LangManager::translate("faq.dashboard.add.toaster.success"));
 
-        Redirect::redirect("cmw-admin/faq/manage");
+        Redirect::redirect("cmw-Admin/faq/manage");
     }
 
-    #[Link("/delete/:id", Link::GET, ["id" => "[0-9]+"], "/cmw-admin/faq")]
+    #[Link("/delete/:id", Link::GET, ["id" => "[0-9]+"], "/cmw-Admin/faq")]
     #[NoReturn] public function faqDelete(int $id): void
     {
         UsersController::redirectIfNotHavePermissions("core.dashboard", "faq.delete");
@@ -123,7 +123,7 @@ class FaqController extends CoreController
         Response::sendAlert("success", LangManager::translate("core.toaster.success"),
             LangManager::translate("faq.dashboard.delete.toaster.success", vars: ["faq" => $faqQuestion]));
 
-        Redirect::redirect("cmw-admin/faq/manage");
+        Redirect::redirect("cmw-Admin/faq/manage");
     }
 
 
@@ -135,7 +135,7 @@ class FaqController extends CoreController
         $faq = new FaqModel();
         $faqList = $faq->getFaqs();
 
-        //Include the public view file ("public/themes/$themePath/views/faq/main.view.php")
+        //Include the Public view file ("Public/Themes/$themePath/Views/faq/main.view.php")
         $view = new View('faq', 'main');
         $view->addVariableList(["faq" => $faq, "faqList" => $faqList]);
         $view->view();
