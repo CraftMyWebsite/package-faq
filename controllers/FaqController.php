@@ -33,8 +33,8 @@ class FaqController extends CoreController
 
     }
 
-    #[Link(path: "/", method: Link::GET, scope: "/cmw-Admin/faq")]
-    #[Link("/manage", Link::GET, [], "/cmw-Admin/faq")]
+    #[Link(path: "/", method: Link::GET, scope: "/cmw-admin/faq")]
+    #[Link("/manage", Link::GET, [], "/cmw-admin/faq")]
     public function faqList(): void
     {
         UsersController::redirectIfNotHavePermissions("core.dashboard", "faq.show");
@@ -52,7 +52,7 @@ class FaqController extends CoreController
             ->view();
     }
 
-    #[Link("/edit/:id", Link::GET, ["id" => "[0-9]+"], "/cmw-Admin/faq")]
+    #[Link("/edit/:id", Link::GET, ["id" => "[0-9]+"], "/cmw-admin/faq")]
     public function faqEdit(int $id): void
     {
         UsersController::redirectIfNotHavePermissions("core.dashboard", "faq.edit");
@@ -64,7 +64,7 @@ class FaqController extends CoreController
             ->view();
     }
 
-    #[Link("/edit/:id", Link::POST, ["id" => "[0-9]+"], "/cmw-Admin/faq")]
+    #[Link("/edit/:id", Link::POST, ["id" => "[0-9]+"], "/cmw-admin/faq")]
     #[NoReturn] public function faqEditPost(int $id): void
     {
         UsersController::redirectIfNotHavePermissions("core.dashboard", "faq.edit");
@@ -78,10 +78,10 @@ class FaqController extends CoreController
         Response::sendAlert("success", LangManager::translate("core.toaster.success"),
             LangManager::translate("faq.dashboard.edit.toaster.success", vars: ["faq" => $question]));
 
-        Redirect::redirect("cmw-Admin/faq/manage");
+        Redirect::redirect("cmw-admin/faq/manage");
     }
 
-    #[Link("/manage", Link::GET, [], "/cmw-Admin/faq")]
+    #[Link("/manage", Link::GET, [], "/cmw-admin/faq")]
     public function faqAdd(): void
     {
         UsersController::redirectIfNotHavePermissions("core.dashboard", "faq.create");
@@ -90,7 +90,7 @@ class FaqController extends CoreController
             ->view();
     }
 
-    #[Link("/manage", Link::POST, [], "/cmw-Admin/faq")]
+    #[Link("/manage", Link::POST, [], "/cmw-admin/faq")]
     public function faqAddPost(): void
     {
         UsersController::redirectIfNotHavePermissions("core.dashboard", "faq.create");
@@ -108,10 +108,10 @@ class FaqController extends CoreController
         Response::sendAlert("success", LangManager::translate("core.toaster.success"),
             LangManager::translate("faq.dashboard.add.toaster.success"));
 
-        Redirect::redirect("cmw-Admin/faq/manage");
+        Redirect::redirect("cmw-admin/faq/manage");
     }
 
-    #[Link("/delete/:id", Link::GET, ["id" => "[0-9]+"], "/cmw-Admin/faq")]
+    #[Link("/delete/:id", Link::GET, ["id" => "[0-9]+"], "/cmw-admin/faq")]
     #[NoReturn] public function faqDelete(int $id): void
     {
         UsersController::redirectIfNotHavePermissions("core.dashboard", "faq.delete");
@@ -123,7 +123,7 @@ class FaqController extends CoreController
         Response::sendAlert("success", LangManager::translate("core.toaster.success"),
             LangManager::translate("faq.dashboard.delete.toaster.success", vars: ["faq" => $faqQuestion]));
 
-        Redirect::redirect("cmw-Admin/faq/manage");
+        Redirect::redirect("cmw-admin/faq/manage");
     }
 
 
