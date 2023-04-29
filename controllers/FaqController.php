@@ -6,6 +6,7 @@ use CMW\Controller\Core\CoreController;
 use CMW\Controller\Menus\MenusController;
 use CMW\Controller\users\UsersController;
 use CMW\Manager\Lang\LangManager;
+use CMW\Manager\Requests\Request;
 use CMW\Model\faq\FaqModel;
 use CMW\Model\users\UsersModel;
 use CMW\Router\Link;
@@ -53,7 +54,7 @@ class FaqController extends CoreController
     }
 
     #[Link("/edit/:id", Link::GET, ["id" => "[0-9]+"], "/cmw-admin/faq")]
-    public function faqEdit(int $id): void
+    public function faqEdit(Request $request, int $id): void
     {
         UsersController::redirectIfNotHavePermissions("core.dashboard", "faq.edit");
 
@@ -65,7 +66,7 @@ class FaqController extends CoreController
     }
 
     #[Link("/edit/:id", Link::POST, ["id" => "[0-9]+"], "/cmw-admin/faq")]
-    #[NoReturn] public function faqEditPost(int $id): void
+    #[NoReturn] public function faqEditPost(Request $request, int $id): void
     {
         UsersController::redirectIfNotHavePermissions("core.dashboard", "faq.edit");
 
@@ -112,7 +113,7 @@ class FaqController extends CoreController
     }
 
     #[Link("/delete/:id", Link::GET, ["id" => "[0-9]+"], "/cmw-admin/faq")]
-    #[NoReturn] public function faqDelete(int $id): void
+    #[NoReturn] public function faqDelete(Request $request, int $id): void
     {
         UsersController::redirectIfNotHavePermissions("core.dashboard", "faq.delete");
 
