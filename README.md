@@ -11,7 +11,7 @@ Ajoutez facilement des faq sur votre site avec ce package !
 
 ## Exemple
 
-Tout d'abord veuillez créer un fichier dans le dossier ```view```de votre thème ```faq/main.view.php```
+Tout d'abord veuillez créer un fichier dans le dossier ```View```de votre thème ```Faq/main.view.php```
 
 Voici un exemple pour afficher toutes les faq (question / réponses)
 ```php
