@@ -2,15 +2,15 @@
 
 namespace CMW\Controller\Faq;
 
-use CMW\Controller\Core\CoreController;
 use CMW\Controller\Menus\MenusController;
 use CMW\Controller\users\UsersController;
+use CMW\Manager\Flash\Flash;
 use CMW\Manager\Lang\LangManager;
+use CMW\Manager\Package\AbstractController;
 use CMW\Manager\Requests\Request;
+use CMW\Manager\Router\Link;
 use CMW\Model\faq\FaqModel;
 use CMW\Model\users\UsersModel;
-use CMW\Router\Link;
-use CMW\Utils\Response;
 use CMW\Manager\Views\View;
 use JetBrains\PhpStorm\NoReturn;
 use CMW\Utils\Redirect;
@@ -21,19 +21,8 @@ use CMW\Utils\Redirect;
  * @author Teyir
  * @version 1.0
  */
-class FaqController extends CoreController
+class FaqController extends AbstractController
 {
-
-    public static string $themePath;
-    private FaqModel $faqModel;
-
-    public function __construct($themePath = null)
-    {
-        parent::__construct($themePath);
-        $this->faqModel = new FaqModel();
-
-    }
-
     #[Link(path: "/", method: Link::GET, scope: "/cmw-admin/faq")]
     #[Link("/manage", Link::GET, [], "/cmw-admin/faq")]
     public function faqList(): void
@@ -41,11 +30,11 @@ class FaqController extends CoreController
         UsersController::redirectIfNotHavePermissions("core.dashboard", "faq.show");
 
 
-        $faqList = $this->faqModel->getFaqs();
+        $faqList = faqModel::getInstance()->getFaqs();
 
 
         //Include the view file ("views/manage.admin.view.php").
-        View::createAdminView('faq', 'manage')
+        View::createAdminView('Faq', 'manage')
             ->addStyle("Admin/Resources/Vendors/Simple-datatables/style.css","Admin/Resources/Assets/Css/Pages/simple-datatables.css")
             ->addScriptAfter("Admin/Resources/Vendors/Simple-datatables/Umd/simple-datatables.js",
                 "Admin/Resources/Assets/Js/Pages/simple-datatables.js")
@@ -58,9 +47,9 @@ class FaqController extends CoreController
     {
         UsersController::redirectIfNotHavePermissions("core.dashboard", "faq.edit");
 
-        $faq = $this->faqModel->getFaqById($id);
+        $faq = faqModel::getInstance()->getFaqById($id);
 
-        View::createAdminView('faq', 'edit')
+        View::createAdminView('Faq', 'edit')
             ->addVariableList(["faq" => $faq])
             ->view();
     }
@@ -74,9 +63,9 @@ class FaqController extends CoreController
         $question = htmlspecialchars(filter_input(INPUT_POST, "question"));
         $response = htmlspecialchars(filter_input(INPUT_POST, "response"));
 
-        $this->faqModel->updateFaq($id, $question, $response);
+        faqModel::getInstance()->updateFaq($id, $question, $response);
 
-        Response::sendAlert("success", LangManager::translate("core.toaster.success"),
+        Flash::send("success", LangManager::translate("core.toaster.success"),
             LangManager::translate("faq.dashboard.edit.toaster.success", vars: ["faq" => $question]));
 
         Redirect::redirect("cmw-admin/faq/manage");
@@ -87,7 +76,7 @@ class FaqController extends CoreController
     {
         UsersController::redirectIfNotHavePermissions("core.dashboard", "faq.create");
 
-        View::createAdminView('faq', 'manage')
+        View::createAdminView('Faq', 'manage')
             ->view();
     }
 
@@ -104,9 +93,9 @@ class FaqController extends CoreController
         $userEntity = $user->getUserById($_SESSION['cmwUserId']);
         $userId = $userEntity?->getId();
 
-        $this->faqModel->createFaq($question, $response, $userId);
+        faqModel::getInstance()->createFaq($question, $response, $userId);
 
-        Response::sendAlert("success", LangManager::translate("core.toaster.success"),
+        Flash::send("success", LangManager::translate("core.toaster.success"),
             LangManager::translate("faq.dashboard.add.toaster.success"));
 
         Redirect::redirect("cmw-admin/faq/manage");
@@ -117,11 +106,11 @@ class FaqController extends CoreController
     {
         UsersController::redirectIfNotHavePermissions("core.dashboard", "faq.delete");
 
-        $faqQuestion = $this->faqModel->getFaqById($id)?->getQuestion();
+        $faqQuestion = faqModel::getInstance()->getFaqById($id)?->getQuestion();
 
-        $this->faqModel->deleteFaq($id);
+        faqModel::getInstance()->deleteFaq($id);
 
-        Response::sendAlert("success", LangManager::translate("core.toaster.success"),
+        Flash::send("success", LangManager::translate("core.toaster.success"),
             LangManager::translate("faq.dashboard.delete.toaster.success", vars: ["faq" => $faqQuestion]));
 
         Redirect::redirect("cmw-admin/faq/manage");
