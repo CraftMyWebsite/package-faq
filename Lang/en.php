@@ -1,6 +1,7 @@
 <?php
 
 return [
+    "faq" => "FAQ",
     "dashboard" => [
         "title" => "FAQ - Manage",
         "desc" => "Manage your FAQ",

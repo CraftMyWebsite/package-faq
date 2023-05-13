@@ -3,13 +3,14 @@
 namespace CMW\Implementation\Faq;
 
 use CMW\Interface\Core\IMenus;
+use CMW\Manager\Lang\LangManager;
 
 class FaqMenusImplementations implements IMenus {
 
     public function getRoutes(): array
     {
         return [
-            'faq'
+            LangManager::translate('faq.faq') => 'faq'
         ];
     }
 

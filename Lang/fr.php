@@ -1,6 +1,7 @@
 <?php
 
 return [
+    "faq" => "FAQ",
     "dashboard" => [
         "title" => "FAQ - Gestion",
         "desc" => "Gestion des FAQ de votre site",
