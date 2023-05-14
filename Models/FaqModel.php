@@ -9,7 +9,7 @@ use CMW\Manager\Package\AbstractModel;
 use CMW\Model\Users\UsersModel;
 
 /**
- * Class @faqModel
+ * Class @FaqModel
  * @package faq
  * @author Teyir
  * @version 1.0
@@ -17,7 +17,12 @@ use CMW\Model\Users\UsersModel;
 class FaqModel extends AbstractModel
 {
 
-    // Create a new faq
+    /**
+     * @param string $question
+     * @param string $response
+     * @param int $authorId
+     * @return \CMW\Entity\Faq\FaqEntity|null
+     */
     public function createFaq(string $question, string $response, int $authorId): ?FaqEntity
     {
         $var = array(
@@ -39,7 +44,10 @@ class FaqModel extends AbstractModel
         return null;
     }
 
-    // Get faq list
+
+    /**
+     * @return FaqEntity[]
+     */
     public function getFaqs(): array
     {
         $sql = "SELECT faq_id FROM cmw_faq";
@@ -60,7 +68,11 @@ class FaqModel extends AbstractModel
         return $toReturn;
     }
 
-    //Fetch an FAQ
+
+    /**
+     * @param $faqId
+     * @return \CMW\Entity\Faq\FaqEntity|null
+     */
     public function getFaqById($faqId): ?FaqEntity
     {
 
@@ -86,7 +98,12 @@ class FaqModel extends AbstractModel
         );
     }
 
-    //Edit an FAQ
+    /**
+     * @param int $faqId
+     * @param string $question
+     * @param string $response
+     * @return \CMW\Entity\Faq\FaqEntity|null
+     */
     public function updateFaq(int $faqId, string $question, string $response): ?FaqEntity
     {
         $info = array(
@@ -106,7 +123,10 @@ class FaqModel extends AbstractModel
         return null;
     }
 
-    //Delete an FAQ
+    /**
+     * @param int $faqId
+     * @return void
+     */
     public function deleteFaq(int $faqId): void
     {
         $sql = "DELETE FROM cmw_faq WHERE faq_id=:faq_id";

@@ -10,7 +10,8 @@ $description = LangManager::translate("faq.dashboard.edit.desc");
 ?>
 
 <div class="d-flex flex-wrap justify-content-between">
-    <h3><i class="fa-solid fa-circle-question"></i> <span class="m-lg-auto"><?= LangManager::translate("faq.dashboard.edit.title") ?></span></h3>
+    <h3><i class="fa-solid fa-circle-question"></i> <span
+            class="m-lg-auto"><?= LangManager::translate("faq.dashboard.edit.title") ?></span></h3>
 </div>
 
 <section>
@@ -20,25 +21,29 @@ $description = LangManager::translate("faq.dashboard.edit.desc");
         </div>
         <div class="card-body">
             <form action="" method="post">
-                    <?php (new SecurityManager())->insertHiddenToken() ?>
+                <?php (new SecurityManager())->insertHiddenToken() ?>
                 <h6><?= LangManager::translate("faq.dashboard.add.question.label") ?> :</h6>
                 <div class="form-group position-relative has-icon-left">
                     <input type="text" class="form-control" name="question" required
-                           placeholder="<?= LangManager::translate("faq.dashboard.add.question.placeholder") ?>" value="<?= $faq->getQuestion() ?>">
+                           placeholder="<?= LangManager::translate("faq.dashboard.add.question.placeholder") ?>"
+                           value="<?= $faq->getQuestion() ?>">
                     <div class="form-control-icon">
                         <i class="fa-solid fa-circle-question"></i>
                     </div>
                 </div>
                 <h6><?= LangManager::translate("faq.dashboard.add.response.label") ?> :</h6>
                 <div class="form-group position-relative has-icon-left">
-                    <textarea type="text" class="form-control" name="response" required
-                           placeholder="<?= LangManager::translate("faq.dashboard.add.response.placeholder") ?>"><?= $faq->getResponse() ?></textarea>
+                    <input type="text" class="form-control" name="response" required
+                              placeholder="<?= LangManager::translate("faq.dashboard.add.response.placeholder") ?>"
+                        value="<?= $faq->getResponse() ?>">
                     <div class="form-control-icon">
                         <i class="fa-solid fa-circle-info"></i>
                     </div>
                 </div>
                 <div class="text-center">
-                    <button type="submit" class="btn btn-primary"><?= LangManager::translate("core.btn.save") ?></button>
+                    <button type="submit" class="btn btn-primary">
+                        <?= LangManager::translate("core.btn.save") ?>
+                    </button>
                 </div>
             </form>
         </div>

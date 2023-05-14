@@ -2,8 +2,8 @@
 
 namespace CMW\Controller\Faq;
 
-use CMW\Controller\Menus\MenusController;
 use CMW\Controller\users\UsersController;
+use CMW\Manager\Flash\Alert;
 use CMW\Manager\Flash\Flash;
 use CMW\Manager\Lang\LangManager;
 use CMW\Manager\Package\AbstractController;
@@ -16,7 +16,7 @@ use JetBrains\PhpStorm\NoReturn;
 use CMW\Utils\Redirect;
 
 /**
- * Class: @faqController
+ * Class: @FaqController
  * @package faq
  * @author Teyir
  * @version 1.0
@@ -59,16 +59,15 @@ class FaqController extends AbstractController
     {
         UsersController::redirectIfNotHavePermissions("core.dashboard", "faq.edit");
 
-
         $question = htmlspecialchars(filter_input(INPUT_POST, "question"));
         $response = htmlspecialchars(filter_input(INPUT_POST, "response"));
 
         faqModel::getInstance()->updateFaq($id, $question, $response);
 
-        Flash::send("success", LangManager::translate("core.toaster.success"),
+        Flash::send(Alert::SUCCESS, LangManager::translate("core.toaster.success"),
             LangManager::translate("faq.dashboard.edit.toaster.success", vars: ["faq" => $question]));
 
-        Redirect::redirect("cmw-admin/faq/manage");
+        Redirect::redirectToAdmin("faq/manage");
     }
 
     #[Link("/manage", Link::GET, [], "/cmw-admin/faq")]
@@ -87,18 +86,14 @@ class FaqController extends AbstractController
 
         $question = htmlspecialchars(filter_input(INPUT_POST, "question"));
         $response = htmlspecialchars(filter_input(INPUT_POST, "response"));
-
-        //Get the author pseudo
-        $user = new UsersModel;
-        $userEntity = $user->getUserById($_SESSION['cmwUserId']);
-        $userId = $userEntity?->getId();
+        $userId = UsersModel::getLoggedUser();
 
         faqModel::getInstance()->createFaq($question, $response, $userId);
 
-        Flash::send("success", LangManager::translate("core.toaster.success"),
+        Flash::send(Alert::SUCCESS, LangManager::translate("core.toaster.success"),
             LangManager::translate("faq.dashboard.add.toaster.success"));
 
-        Redirect::redirect("cmw-admin/faq/manage");
+        Redirect::redirectToAdmin("faq/manage");
     }
 
     #[Link("/delete/:id", Link::GET, ["id" => "[0-9]+"], "/cmw-admin/faq")]
@@ -110,10 +105,10 @@ class FaqController extends AbstractController
 
         faqModel::getInstance()->deleteFaq($id);
 
-        Flash::send("success", LangManager::translate("core.toaster.success"),
+        Flash::send(Alert::SUCCESS, LangManager::translate("core.toaster.success"),
             LangManager::translate("faq.dashboard.delete.toaster.success", vars: ["faq" => $faqQuestion]));
 
-        Redirect::redirect("cmw-admin/faq/manage");
+        Redirect::redirectToAdmin("faq/manage");
     }
 
 
@@ -125,7 +120,7 @@ class FaqController extends AbstractController
         $faq = new FaqModel();
         $faqList = $faq->getFaqs();
 
-        //Include the Public view file ("Public/Themes/$themePath/Views/faq/main.view.php")
+        //Include the Public view file ("Public/Themes/$themePath/Views/Faq/main.view.php")
         $view = new View('Faq', 'main');
         $view->addVariableList(["faq" => $faq, "faqList" => $faqList]);
         $view->view();
