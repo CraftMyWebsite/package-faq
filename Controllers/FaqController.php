@@ -86,7 +86,7 @@ class FaqController extends AbstractController
 
         $question = htmlspecialchars(filter_input(INPUT_POST, "question"));
         $response = htmlspecialchars(filter_input(INPUT_POST, "response"));
-        $userId = UsersModel::getLoggedUser();
+        $userId = UsersModel::getCurrentUser()?->getId();
 
         faqModel::getInstance()->createFaq($question, $response, $userId);
 
