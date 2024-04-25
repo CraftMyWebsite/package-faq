@@ -1,6 +1,6 @@
 <?php
 
-namespace CMW\Implementation\Faq;
+namespace CMW\Implementation\Faq\Core;
 
 use CMW\Interface\Core\IMenus;
 use CMW\Manager\Lang\LangManager;
