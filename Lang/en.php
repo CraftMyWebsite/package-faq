@@ -12,7 +12,7 @@ return [
             "author" => "Author",
             "editing" => "Modifications",
             "add" => "Add an FAQ",
-            "edit" => "Edit the FAQ n° %faq_number%"
+            "edit" => "Edit the FAQ n° %faq_number%",
         ],
         "modal" => [
             "delete" => "Delete :",
@@ -29,20 +29,27 @@ return [
                 "placeholder" => "Add a response",
             ],
             "toaster" => [
-                "success" => "FAQ added with success !"
+                "success" => "FAQ added with success !",
             ],
         ],
         "edit" => [
             "title" => "FAQ - Modifications",
             "toaster" => [
-                "success" => "FAQ %faq% edited with success !"
+                "success" => "FAQ %faq% edited with success !",
             ],
         ],
         "delete" => [
             "toaster" => [
-                "success" => "FAQ %faq% delete with success !"
+                "success" => "FAQ %faq% delete with success !",
             ],
         ],
     ],
-
+    "permissions" => [
+        "faq" => [
+            "show" => "Show faq",
+            "edit" => "Edit faq",
+            "create" => "Create faq",
+            "delete" => "Delete faq",
+        ],
+    ],
 ];
