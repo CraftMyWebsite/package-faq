@@ -46,10 +46,10 @@ return [
     ],
     "permissions" => [
         "faq" => [
-            "show" => "Afficher les faq",
-            "edit" => "Modifier les faq",
-            "create" => "Créer une faq",
-            "delete" => "Supprimer une faq",
+            "show" => "Afficher",
+            "edit" => "Modifier",
+            "create" => "Créer",
+            "delete" => "Supprimer",
         ],
     ],
 ];

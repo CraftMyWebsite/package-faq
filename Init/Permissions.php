@@ -16,12 +16,12 @@ class Permissions implements IPermissionInit
                 description: LangManager::translate('faq.permissions.faq.show'),
             ),
             new PermissionInitType(
-                code: 'faq.edit',
-                description: LangManager::translate('faq.permissions.faq.edit'),
-            ),
-            new PermissionInitType(
                 code: 'faq.create',
                 description: LangManager::translate('faq.permissions.faq.create'),
+            ),
+            new PermissionInitType(
+                code: 'faq.edit',
+                description: LangManager::translate('faq.permissions.faq.edit'),
             ),
             new PermissionInitType(
                 code: 'faq.delete',
