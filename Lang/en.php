@@ -46,10 +46,10 @@ return [
     ],
     "permissions" => [
         "faq" => [
-            "show" => "Show faq",
-            "edit" => "Edit faq",
-            "create" => "Create faq",
-            "delete" => "Delete faq",
+            "show" => "Show",
+            "edit" => "Edit",
+            "create" => "Create",
+            "delete" => "Delete",
         ],
     ],
 ];
