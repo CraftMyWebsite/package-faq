@@ -4,7 +4,6 @@ namespace CMW\Model\Faq;
 
 use CMW\Entity\Faq\FaqEntity;
 use CMW\Manager\Database\DatabaseManager;
-
 use CMW\Manager\Package\AbstractModel;
 use CMW\Model\Users\UsersModel;
 
@@ -16,7 +15,6 @@ use CMW\Model\Users\UsersModel;
  */
 class FaqModel extends AbstractModel
 {
-
     /**
      * @param string $question
      * @param string $response
@@ -31,7 +29,7 @@ class FaqModel extends AbstractModel
             'author' => $authorId
         );
 
-        $sql = "INSERT INTO cmw_faq (faq_question, faq_response, faq_author) VALUES (:question, :response, :author)";
+        $sql = 'INSERT INTO cmw_faq (faq_question, faq_response, faq_author) VALUES (:question, :response, :author)';
 
         $db = DatabaseManager::getInstance();
         $req = $db->prepare($sql);
@@ -44,13 +42,12 @@ class FaqModel extends AbstractModel
         return null;
     }
 
-
     /**
      * @return FaqEntity[]
      */
     public function getFaqs(): array
     {
-        $sql = "SELECT faq_id FROM cmw_faq";
+        $sql = 'SELECT faq_id FROM cmw_faq';
         $db = DatabaseManager::getInstance();
 
         $res = $db->prepare($sql);
@@ -62,12 +59,11 @@ class FaqModel extends AbstractModel
         $toReturn = array();
 
         while ($faq = $res->fetch()) {
-            $toReturn[] = $this->getFaqById($faq["faq_id"]);
+            $toReturn[] = $this->getFaqById($faq['faq_id']);
         }
 
         return $toReturn;
     }
-
 
     /**
      * @param $faqId
@@ -75,20 +71,18 @@ class FaqModel extends AbstractModel
      */
     public function getFaqById($faqId): ?FaqEntity
     {
-
-        $sql = "SELECT * FROM cmw_faq WHERE faq_id=:faq_id";
+        $sql = 'SELECT * FROM cmw_faq WHERE faq_id=:faq_id';
 
         $db = DatabaseManager::getInstance();
         $res = $db->prepare($sql);
 
-
-        if (!$res->execute(array("faq_id" => $faqId))) {
+        if (!$res->execute(array('faq_id' => $faqId))) {
             return null;
         }
 
         $res = $res->fetch();
 
-        $user = (new UsersModel())->getUserById($res["faq_author"]);
+        $user = (new UsersModel())->getUserById($res['faq_author']);
 
         return new FaqEntity(
             $res['faq_id'],
@@ -107,12 +101,12 @@ class FaqModel extends AbstractModel
     public function updateFaq(int $faqId, string $question, string $response): ?FaqEntity
     {
         $info = array(
-            "faq_id" => $faqId,
-            "question" => $question,
-            "response" => $response
+            'faq_id' => $faqId,
+            'question' => $question,
+            'response' => $response
         );
 
-        $sql = "UPDATE cmw_faq SET faq_question=:question, faq_response=:response WHERE faq_id=:faq_id";
+        $sql = 'UPDATE cmw_faq SET faq_question=:question, faq_response=:response WHERE faq_id=:faq_id';
 
         $db = DatabaseManager::getInstance();
         $req = $db->prepare($sql);
@@ -129,11 +123,10 @@ class FaqModel extends AbstractModel
      */
     public function deleteFaq(int $faqId): void
     {
-        $sql = "DELETE FROM cmw_faq WHERE faq_id=:faq_id";
+        $sql = 'DELETE FROM cmw_faq WHERE faq_id=:faq_id';
 
         $db = DatabaseManager::getInstance();
         $req = $db->prepare($sql);
-        $req->execute(array("faq_id" => $faqId));
+        $req->execute(array('faq_id' => $faqId));
     }
-
 }

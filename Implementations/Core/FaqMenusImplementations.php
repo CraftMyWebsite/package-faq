@@ -5,8 +5,8 @@ namespace CMW\Implementation\Faq\Core;
 use CMW\Interface\Core\IMenus;
 use CMW\Manager\Lang\LangManager;
 
-class FaqMenusImplementations implements IMenus {
-
+class FaqMenusImplementations implements IMenus
+{
     public function getRoutes(): array
     {
         return [

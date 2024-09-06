@@ -6,7 +6,6 @@ use CMW\Entity\Users\UserEntity;
 
 class FaqEntity
 {
-
     private int $faqId;
     private string $question;
     private string $response;
@@ -57,5 +56,4 @@ class FaqEntity
     {
         return $this->author;
     }
-
 }
