@@ -3,6 +3,7 @@
 namespace CMW\Controller\Faq;
 
 use CMW\Controller\users\UsersController;
+use CMW\Manager\Filter\FilterManager;
 use CMW\Manager\Flash\Alert;
 use CMW\Manager\Flash\Flash;
 use CMW\Manager\Lang\LangManager;
@@ -16,7 +17,7 @@ use JetBrains\PhpStorm\NoReturn;
 
 /**
  * Class: @FaqController
- * @package faq
+ * @package Faq
  * @author Teyir
  * @version 1.0
  */
@@ -24,7 +25,7 @@ class FaqController extends AbstractController
 {
     #[Link(path: '/', method: Link::GET, scope: '/cmw-admin/faq')]
     #[Link('/manage', Link::GET, [], '/cmw-admin/faq')]
-    public function faqList(): void
+    private function faqList(): void
     {
         UsersController::redirectIfNotHavePermissions('core.dashboard', 'faq.show');
 
@@ -40,11 +41,15 @@ class FaqController extends AbstractController
     }
 
     #[Link('/edit/:id', Link::GET, ['id' => '[0-9]+'], '/cmw-admin/faq')]
-    public function faqEdit(int $id): void
+    private function faqEdit(int $id): void
     {
         UsersController::redirectIfNotHavePermissions('core.dashboard', 'faq.edit');
 
         $faq = faqModel::getInstance()->getFaqById($id);
+
+        if (!$faq){
+            Redirect::errorPage(404);
+        }
 
         View::createAdminView('Faq', 'edit')
             ->addVariableList(['faq' => $faq])
@@ -53,12 +58,12 @@ class FaqController extends AbstractController
 
     #[Link('/edit/:id', Link::POST, ['id' => '[0-9]+'], '/cmw-admin/faq')]
     #[NoReturn]
-    public function faqEditPost(int $id): void
+    private function faqEditPost(int $id): void
     {
         UsersController::redirectIfNotHavePermissions('core.dashboard', 'faq.edit');
 
-        $question = htmlspecialchars(filter_input(INPUT_POST, 'question'));
-        $response = htmlspecialchars(filter_input(INPUT_POST, 'response'));
+        $question = FilterManager::filterInputStringPost("question");
+        $response = FilterManager::filterInputStringPost("response");
 
         faqModel::getInstance()->updateFaq($id, $question, $response);
 
@@ -69,7 +74,7 @@ class FaqController extends AbstractController
     }
 
     #[Link('/manage', Link::GET, [], '/cmw-admin/faq')]
-    public function faqAdd(): void
+    private function faqAdd(): void
     {
         UsersController::redirectIfNotHavePermissions('core.dashboard', 'faq.create');
 
@@ -77,13 +82,14 @@ class FaqController extends AbstractController
             ->view();
     }
 
-    #[Link('/manage', Link::POST, [], '/cmw-admin/faq')]
-    public function faqAddPost(): void
+    #[NoReturn] #[Link('/manage', Link::POST, [], '/cmw-admin/faq')]
+    private function faqAddPost(): void
     {
         UsersController::redirectIfNotHavePermissions('core.dashboard', 'faq.create');
 
-        $question = htmlspecialchars(filter_input(INPUT_POST, 'question'));
-        $response = htmlspecialchars(filter_input(INPUT_POST, 'response'));
+        $question = FilterManager::filterInputStringPost("question");
+        $response = FilterManager::filterInputStringPost("response");
+
         $userId = UsersModel::getCurrentUser()?->getId();
 
         faqModel::getInstance()->createFaq($question, $response, $userId);
@@ -94,9 +100,8 @@ class FaqController extends AbstractController
         Redirect::redirectToAdmin('faq/manage');
     }
 
-    #[Link('/delete/:id', Link::GET, ['id' => '[0-9]+'], '/cmw-admin/faq')]
-    #[NoReturn]
-    public function faqDelete(int $id): void
+    #[NoReturn] #[Link('/delete/:id', Link::GET, ['id' => '[0-9]+'], '/cmw-admin/faq')]
+    private function faqDelete(int $id): void
     {
         UsersController::redirectIfNotHavePermissions('core.dashboard', 'faq.delete');
 
@@ -113,7 +118,7 @@ class FaqController extends AbstractController
     /* //////////////////// FRONT PUBLIC //////////////////// */
 
     #[Link('/faq', Link::GET)]
-    public function frontFaqPublic(): void
+    private function frontFaqPublic(): void
     {
         $faq = new FaqModel();
         $faqList = $faq->getFaqs();
