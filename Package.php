@@ -36,17 +36,8 @@ class Package implements IPackageConfig
     {
         return [
             new PackageMenuType(
-                lang: 'fr',
                 icon: 'fas fa-question-circle',
                 title: 'Faq',
-                url: 'faq/manage',
-                permission: 'faq.show',
-                subMenus: []
-            ),
-            new PackageMenuType(
-                lang: 'en',
-                icon: 'fas fa-question-circle',
-                title: 'Calendar',
                 url: 'faq/manage',
                 permission: 'faq.show',
                 subMenus: []
