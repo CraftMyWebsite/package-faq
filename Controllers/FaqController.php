@@ -19,7 +19,7 @@ use JetBrains\PhpStorm\NoReturn;
  * Class: @FaqController
  * @package Faq
  * @author Teyir
- * @version 1.0
+ * @version 0.0.1
  */
 class FaqController extends AbstractController
 {
