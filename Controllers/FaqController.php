@@ -120,12 +120,8 @@ class FaqController extends AbstractController
     #[Link('/faq', Link::GET)]
     private function frontFaqPublic(): void
     {
-        $faq = new FaqModel();
-        $faqList = $faq->getFaqs();
+        $faqList = FaqModel::getInstance()->getFaqs();
 
-        // Include the Public view file ("Public/Themes/$themePath/Views/Faq/main.view.php")
-        $view = new View('Faq', 'main');
-        $view->addVariableList(['faq' => $faq, 'faqList' => $faqList]);
-        $view->view();
+        View::createPublicView('Faq', 'main')->addVariableList(['faqList' => $faqList])->view();
     }
 }
