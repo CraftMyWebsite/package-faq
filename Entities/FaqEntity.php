@@ -3,8 +3,9 @@
 namespace CMW\Entity\Faq;
 
 use CMW\Entity\Users\UserEntity;
+use CMW\Manager\Package\AbstractEntity;
 
-class FaqEntity
+class FaqEntity extends AbstractEntity
 {
     private int $faqId;
     private string $question;
