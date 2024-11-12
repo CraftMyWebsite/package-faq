@@ -13,7 +13,7 @@ $description = LangManager::translate('faq.dashboard.edit.desc');
 
 <div class="card">
     <form action="" method="post">
-        <?php (new SecurityManager())->insertHiddenToken() ?>
+        <?php SecurityManager::getInstance()->insertHiddenToken() ?>
         <label for="question"><?= LangManager::translate('faq.dashboard.add.question.label') ?> :</label>
         <div class="input-group">
             <i class="fa-solid fa-circle-question"></i>
