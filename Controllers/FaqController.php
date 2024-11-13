@@ -3,6 +3,7 @@
 namespace CMW\Controller\Faq;
 
 use CMW\Controller\users\UsersController;
+use CMW\Controller\Users\UsersSessionsController;
 use CMW\Manager\Filter\FilterManager;
 use CMW\Manager\Flash\Alert;
 use CMW\Manager\Flash\Flash;
@@ -11,7 +12,6 @@ use CMW\Manager\Package\AbstractController;
 use CMW\Manager\Router\Link;
 use CMW\Manager\Views\View;
 use CMW\Model\faq\FaqModel;
-use CMW\Model\users\UsersModel;
 use CMW\Utils\Redirect;
 use JetBrains\PhpStorm\NoReturn;
 
@@ -90,7 +90,7 @@ class FaqController extends AbstractController
         $question = FilterManager::filterInputStringPost("question");
         $response = FilterManager::filterInputStringPost("response");
 
-        $userId = UsersModel::getCurrentUser()?->getId();
+        $userId = UsersSessionsController::getInstance()->getCurrentUser()?->getId();
 
         faqModel::getInstance()->createFaq($question, $response, $userId);
 
