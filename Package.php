@@ -39,8 +39,7 @@ class Package implements IPackageConfig
                 icon: 'fas fa-question-circle',
                 title: 'Faq',
                 url: 'faq/manage',
-                permission: 'faq.show',
-                subMenus: []
+                permission: 'faq.show'
             ),
         ];
     }
