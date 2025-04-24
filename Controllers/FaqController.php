@@ -62,8 +62,8 @@ class FaqController extends AbstractController
     {
         UsersController::redirectIfNotHavePermissions('core.dashboard', 'faq.edit');
 
-        $question = FilterManager::filterInputStringPost("question");
-        $response = FilterManager::filterInputStringPost("response");
+        $question = FilterManager::filterInputStringPost("question", null);
+        $response = FilterManager::filterInputStringPost("response", null);
 
         faqModel::getInstance()->updateFaq($id, $question, $response);
 
@@ -87,8 +87,8 @@ class FaqController extends AbstractController
     {
         UsersController::redirectIfNotHavePermissions('core.dashboard', 'faq.create');
 
-        $question = FilterManager::filterInputStringPost("question");
-        $response = FilterManager::filterInputStringPost("response");
+        $question = FilterManager::filterInputStringPost("question", null);
+        $response = FilterManager::filterInputStringPost("response", null);
 
         $userId = UsersSessionsController::getInstance()->getCurrentUser()?->getId();
 
