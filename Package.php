@@ -65,11 +65,6 @@ class Package implements IPackageConfigV2
         return null;
     }
 
-    public function author(): ?string
-    {
-        return "Teyir";
-    }
-
     public function compatiblesPackages(): array
     {
         return [];
